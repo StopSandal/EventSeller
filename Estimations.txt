@@ -9,7 +9,7 @@
   * Real: 15 min
 3. add UnitOfWork class
   * Estimated: 30 min
-  * Real: -
+  * Real: 8 min
 4. add Buying tickets service
   * Estimated: 1.5 h
   * Real: -
