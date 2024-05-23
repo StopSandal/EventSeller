@@ -1,0 +1,21 @@
+﻿0. plan task
+  * Estimated: 1h
+  * Real: 42 min
+1. Add all model class and establish EF db connection
+  * Estimated: 40 min
+  * Real: -
+2. add generic repository
+  * Estimated: 25 min
+  * Real: -
+3. add UnitOfWork class
+  * Estimated: 30 min
+  * Real: -
+4. add Buying tickets service
+  * Estimated: 1.5 h
+  * Real: -
+5. add controller for it
+  * Estimated: 1.5h
+  * Real: -
+6. test system
+  * Estimated: 1 h
+  * Real: -
