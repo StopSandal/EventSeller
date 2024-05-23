@@ -5,7 +5,7 @@ namespace EventSeller.Model
 {
     public class UnitOfWork : IDisposable
     {
-        private SellerContext context = new SellerContext();
+        private readonly SellerContext context = new();
         private GenericRepository<Event> eventRepository;
         private GenericRepository<HallSector> hallSectorRepository;
         private GenericRepository<PlaceAddress> placeAddressRepository;
