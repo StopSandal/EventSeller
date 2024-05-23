@@ -6,7 +6,7 @@
   * Real: 73 min
 2. add generic repository
   * Estimated: 25 min
-  * Real: -
+  * Real: 15 min
 3. add UnitOfWork class
   * Estimated: 30 min
   * Real: -
