@@ -50,7 +50,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateTicket(Guid id, [FromBody] Ticket NewTicket)
+        public IActionResult UpdateTicket(long id, [FromBody] Ticket NewTicket)
         {
             if (id != NewTicket.ID)
             {
@@ -80,7 +80,11 @@ namespace EventSeller.Controllers
         {
             try
             {
+                var list = _unitOfWork.TicketRepository.GetByID(id);
+                if (list == null)
+                    return NotFound();
                 _unitOfWork.TicketRepository.Delete(id);
+                _unitOfWork.Save();
                 return NoContent();
             }
             catch (Exception ex)

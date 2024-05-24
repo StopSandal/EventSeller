@@ -35,7 +35,7 @@ namespace PlaceAddressSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreatePlaceAddress([FromBody] PlaceAddress NewPlaceAddress)
+        public IActionResult CreatePlaceAddress( PlaceAddress NewPlaceAddress)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace PlaceAddressSeller.Controllers
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while creating the PlaceAddress.");
             }
-            return Created();
+            return CreatedAtAction(nameof(Get), new { id = NewPlaceAddress.ID }, NewPlaceAddress); ;
         }
         [HttpPut("{id}")]
         public IActionResult UpdatePlaceAddress(long id, [FromBody] PlaceAddress NewPlaceAddress)
@@ -80,7 +80,11 @@ namespace PlaceAddressSeller.Controllers
         {
             try
             {
+                var list = _unitOfWork.PlaceAddressRepository.GetByID(id);
+                if (list == null)
+                    return NotFound();
                 _unitOfWork.PlaceAddressRepository.Delete(id);
+                _unitOfWork.Save();
                 return NoContent();
             }
             catch (Exception ex)

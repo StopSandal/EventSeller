@@ -1,6 +1,6 @@
 ﻿namespace EventSeller.Model
 {
-    public class Event
+    public class Event : IEntity
     {
         public long ID { get; set; }
         public string Name { get; set; }

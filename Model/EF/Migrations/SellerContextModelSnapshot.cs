@@ -62,11 +62,14 @@ namespace EventSeller.Migrations
 
                     b.Property<string>("SectorName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ID");
 
                     b.HasIndex("PlaceHallID");
+
+                    b.HasIndex("SectorName", "PlaceHallID")
+                        .IsUnique();
 
                     b.ToTable("HallSectors");
                 });
@@ -100,48 +103,54 @@ namespace EventSeller.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
-                    b.Property<long>("EventAddressID")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("HallName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<long>("PlaceAddressID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("EventAddressID");
+                    b.HasIndex("PlaceAddressID");
+
+                    b.HasIndex("HallName", "PlaceAddressID")
+                        .IsUnique();
 
                     b.ToTable("PlaceHalls");
                 });
 
             modelBuilder.Entity("EventSeller.Model.Ticket", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("EventID")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<Guid>("SeatID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<long>("SeatID")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("TicketEndDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("TicketStartDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("isSold")
+                        .HasColumnType("bit");
 
                     b.HasKey("ID");
 
@@ -154,9 +163,11 @@ namespace EventSeller.Migrations
 
             modelBuilder.Entity("EventSeller.Model.TicketSeat", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"));
 
                     b.Property<long>("HallSectorID")
                         .HasColumnType("bigint");
@@ -195,13 +206,13 @@ namespace EventSeller.Migrations
 
             modelBuilder.Entity("EventSeller.Model.PlaceHall", b =>
                 {
-                    b.HasOne("EventSeller.Model.PlaceAddress", "EventAddress")
+                    b.HasOne("EventSeller.Model.PlaceAddress", "PlaceAddress")
                         .WithMany("PlaceHall")
-                        .HasForeignKey("EventAddressID")
+                        .HasForeignKey("PlaceAddressID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EventAddress");
+                    b.Navigation("PlaceAddress");
                 });
 
             modelBuilder.Entity("EventSeller.Model.Ticket", b =>

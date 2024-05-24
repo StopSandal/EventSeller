@@ -81,7 +81,11 @@ namespace EventSeller.Controllers
         {
             try
             {
+                var list = _unitOfWork.HallSectorRepository.GetByID(id);
+                if (list == null)
+                    return NotFound();
                 _unitOfWork.HallSectorRepository.Delete(id);
+                _unitOfWork.Save();
                 return NoContent();
             }
             catch (Exception ex)

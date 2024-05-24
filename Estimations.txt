@@ -10,7 +10,7 @@
 3. add UnitOfWork class
   * Estimated: 30 min
   * Real: 8 min
-4. add Buying tickets service
+4. add Buying tickets service // not for now
   * Estimated: 1.5 h
   * Real: -
 5. add controller for it
@@ -18,4 +18,7 @@
   * Real: - 1 h 7 min
 6. test system
   * Estimated: 1 h
-  * Real: -
+  * Real: 36 min
+7. Fix
+    * Estimated: 1 h
+    * Real: 3 h

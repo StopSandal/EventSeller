@@ -36,7 +36,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreatePlaceHall([FromBody] PlaceHall NewPlaceHall)
+        public IActionResult CreatePlaceHall(PlaceHall NewPlaceHall)
         {
             try
             {
@@ -81,7 +81,11 @@ namespace EventSeller.Controllers
         {
             try
             {
+                var list = _unitOfWork.PlaceHallRepository.GetByID(id);
+                if (list == null)
+                    return NotFound();
                 _unitOfWork.PlaceHallRepository.Delete(id);
+                _unitOfWork.Save();
                 return NoContent();
             }
             catch (Exception ex)

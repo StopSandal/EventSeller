@@ -80,9 +80,13 @@ namespace EventSeller.Controllers
         public IActionResult DeleteEvent(long id) 
         {
             try
-            {   
-                 _unitOfWork.EventRepository.Delete(id);
-                 return NoContent();
+            {
+                var list = _unitOfWork.EventRepository.GetByID(id);
+                if (list == null)
+                    return NotFound();
+                _unitOfWork.EventRepository.Delete(id);
+                _unitOfWork.Save();
+                return NoContent();
             }
             catch (Exception ex)
             {

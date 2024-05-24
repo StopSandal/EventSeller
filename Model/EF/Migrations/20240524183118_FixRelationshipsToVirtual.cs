@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventSeller.Migrations
 {
     /// <inheritdoc />
-    public partial class initmigration : Migration
+    public partial class FixRelationshipsToVirtual : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,15 +47,15 @@ namespace EventSeller.Migrations
                 {
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HallName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventAddressID = table.Column<long>(type: "bigint", nullable: false)
+                    HallName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PlaceAddressID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PlaceHalls", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_PlaceHalls_PlaceAddresses_EventAddressID",
-                        column: x => x.EventAddressID,
+                        name: "FK_PlaceHalls_PlaceAddresses_PlaceAddressID",
+                        column: x => x.PlaceAddressID,
                         principalTable: "PlaceAddresses",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -67,7 +67,7 @@ namespace EventSeller.Migrations
                 {
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SectorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SectorName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PlaceHallID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -85,7 +85,8 @@ namespace EventSeller.Migrations
                 name: "Seats",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PlaceName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PlaceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PlaceRow = table.Column<int>(type: "int", nullable: true),
@@ -107,13 +108,15 @@ namespace EventSeller.Migrations
                 name: "Tickets",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    isSold = table.Column<bool>(type: "bit", nullable: false),
                     TicketStartDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TicketEndEventDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SeatID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TicketEndDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SeatID = table.Column<long>(type: "bigint", nullable: false),
                     EventID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -139,9 +142,21 @@ namespace EventSeller.Migrations
                 column: "PlaceHallID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlaceHalls_EventAddressID",
+                name: "IX_HallSectors_SectorName_PlaceHallID",
+                table: "HallSectors",
+                columns: new[] { "SectorName", "PlaceHallID" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlaceHalls_HallName_PlaceAddressID",
                 table: "PlaceHalls",
-                column: "EventAddressID");
+                columns: new[] { "HallName", "PlaceAddressID" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlaceHalls_PlaceAddressID",
+                table: "PlaceHalls",
+                column: "PlaceAddressID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seats_HallSectorID",

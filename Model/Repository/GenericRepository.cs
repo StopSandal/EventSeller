@@ -1,10 +1,13 @@
-﻿using EventSeller.Model.EF;
+﻿using Elfie.Serialization;
+using EventSeller.Model.EF;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace EventSeller.Model.Repository
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> where TEntity : class,IEntity
     {
         internal SellerContext context;
         internal DbSet<TEntity> dbSet;
@@ -70,8 +73,19 @@ namespace EventSeller.Model.Repository
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            var existingEntity = dbSet.FirstOrDefault(e => e.ID==entityToUpdate.ID);
+            var sourceProperties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var sourceProperty in sourceProperties)
+            {
+                if (sourceProperty.CanWrite)
+                {
+                    var value = sourceProperty.GetValue(entityToUpdate);
+                    sourceProperty.SetValue(existingEntity, value);
+                }
+            }
+            dbSet.Attach(existingEntity);
+            context.Entry(existingEntity).State = EntityState.Modified;
         }
     }
 }
