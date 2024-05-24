@@ -1,7 +1,7 @@
-﻿
+﻿using DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
-using EventSeller.Model;
 using Microsoft.IdentityModel.Tokens;
+using Services;
 
 namespace PlaceAddressSeller.Controllers
 {

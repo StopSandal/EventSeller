@@ -1,7 +1,9 @@
-﻿using EventSeller.Model;
+﻿
+using DataLayer.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Services;
 using System.Collections.Generic;
 
 namespace EventSeller.Controllers

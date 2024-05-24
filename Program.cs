@@ -1,5 +1,6 @@
-using EventSeller.Model;
-using EventSeller.Model.EF;
+using DataLayer.Model;
+using DataLayer.Model.EF;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
