@@ -1,0 +1,6 @@
+[submodule "EventSeller.Services"]
+	path = EventSeller.Services
+	url = https://github.com/StopSandal/EventSeller.Services
+[submodule "EventSeller.DataLayer"]
+	path = EventSeller.DataLayer
+	url = https://github.com/StopSandal/EventSeller.DataLayer

@@ -1,9 +1,24 @@
+using DataLayer.Model;
+using DataLayer.Model.EF;
+using Services;
+using Services.Service;
+using System.Drawing.Text;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers().AddJsonOptions(x =>
+{
+    x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
+
+builder.Services.AddDbContext<SellerContext>();
+builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+RegisterServices(builder.Services);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -21,3 +36,13 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void RegisterServices(IServiceCollection services)
+{
+    services.AddScoped<IEventService, EventService>();
+    services.AddScoped<IHallSectorService, HallSectorService>();
+    services.AddScoped<IPlaceAddressService, PlaceAddressService>();
+    services.AddScoped<IPlaceHallService, PlaceHallService>();
+    services.AddScoped<ITicketSeatService, TicketSeatService>();
+    services.AddScoped<ITicketService, TicketService>();
+}

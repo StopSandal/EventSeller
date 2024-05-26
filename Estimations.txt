@@ -3,19 +3,34 @@
   * Real: 42 min
 1. Add all model class and establish EF db connection
   * Estimated: 40 min
-  * Real: -
+  * Real: 73 min
 2. add generic repository
   * Estimated: 25 min
-  * Real: -
+  * Real: 15 min
 3. add UnitOfWork class
   * Estimated: 30 min
-  * Real: -
-4. add Buying tickets service
+  * Real: 8 min
+4. add Buying tickets service // not for now
   * Estimated: 1.5 h
   * Real: -
 5. add controller for it
   * Estimated: 1.5h
-  * Real: -
+  * Real: 1 h 7 min
 6. test system
   * Estimated: 1 h
-  * Real: -
+  * Real: 36 min
+7. Fix
+    * Estimated: 1 h
+    * Real: 3 h
+8. add Creare and Update Models
+    * Estimated: 30 min 
+    * Real: 24 min
+9. add CRUD services for all entities
+  * Estimated: 75 min
+  * Real: 43 min
+10. Rewrite Controllers and Test them.
+    * Estimated: 55 min
+    * Real: 50 min
+11. Add Check for uniqueness
+    * Estimated: 1 h 
+    * Real: 51 min
