@@ -22,3 +22,6 @@
 7. Fix
     * Estimated: 1 h
     * Real: 3 h
+8. add Creare and Update Models
+    * Estimated: 30 min 
+    * Real: 24 min
