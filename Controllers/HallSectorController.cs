@@ -46,6 +46,11 @@ namespace hallSectorSeller.Controllers
             {
                 _hallSectorService.Create(NewHallSector);
             }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest("Sector name should be unique for Hall");
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
@@ -65,6 +70,11 @@ namespace hallSectorSeller.Controllers
             try
             {
                 _hallSectorService.Update(id,updateHallSector);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest("Sector name should be unique for Hall");
             }
             catch (Exception ex)
             {

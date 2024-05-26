@@ -45,6 +45,11 @@ namespace EventSeller.Controllers
             {
                 _placeHallService.Create(NewPlaceHall);
             }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest("Hall name should be unique for Place");
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
@@ -66,6 +71,11 @@ namespace EventSeller.Controllers
             {
                 _placeHallService.Update(id, updatePlaceHall);
 
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest("Hall name should be unique for Place");
             }
             catch (Exception ex)
             {

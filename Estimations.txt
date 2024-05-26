@@ -30,4 +30,7 @@
   * Real: 43 min
 10. Rewrite Controllers and Test them.
     * Estimated: 55 min
-    * Real: - 50 min
+    * Real: 50 min
+11. Add Check for uniqueness
+    * Estimated: 1 h 
+    * Real: 51 min
