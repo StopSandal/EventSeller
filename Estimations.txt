@@ -15,7 +15,7 @@
   * Real: -
 5. add controller for it
   * Estimated: 1.5h
-  * Real: - 1 h 7 min
+  * Real: 1 h 7 min
 6. test system
   * Estimated: 1 h
   * Real: 36 min
@@ -25,3 +25,9 @@
 8. add Creare and Update Models
     * Estimated: 30 min 
     * Real: 24 min
+9. add CRUD services for all entities
+  * Estimated: 75 min
+  * Real: 43 min
+10. Rewrite Controllers and Test them.
+    * Estimated: 55 min
+    * Real: - 50 min

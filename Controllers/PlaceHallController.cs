@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataLayer.Model;
 using Microsoft.IdentityModel.Tokens;
+using Services.Service;
+using DataLayer.Models.PlaceHall;
 
 
 namespace EventSeller.Controllers
@@ -12,17 +14,17 @@ namespace EventSeller.Controllers
     public class PlaceHallController : ControllerBase
     {
         private readonly ILogger<PlaceHallController> _logger;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IPlaceHallService _placeHallService;
 
-        public PlaceHallController(ILogger<PlaceHallController> logger, UnitOfWork unitOfWork)
+        public PlaceHallController(ILogger<PlaceHallController> logger, IPlaceHallService placeHallService)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
+            _placeHallService = placeHallService;
         }
         [HttpGet]
         public IActionResult Get()
         {
-            var list = _unitOfWork.PlaceHallRepository.Get();
+            var list = _placeHallService.GetPlaceHalls();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -31,18 +33,17 @@ namespace EventSeller.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var list = _unitOfWork.PlaceHallRepository.GetByID(id);
+            var list = _placeHallService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreatePlaceHall(PlaceHall NewPlaceHall)
+        public IActionResult CreatePlaceHall([FromBody] CreatePlaceHall NewPlaceHall)
         {
             try
             {
-                _unitOfWork.PlaceHallRepository.Insert(NewPlaceHall);
-                _unitOfWork.Save();
+                _placeHallService.Create(NewPlaceHall);
             }
             catch (Exception ex)
             {
@@ -52,13 +53,10 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdatePlaceHall(long id, [FromBody] PlaceHall NewPlaceHall)
+        public IActionResult UpdatePlaceHall(long id, [FromBody] UpdatePlaceHall updatePlaceHall)
         {
-            if (id != NewPlaceHall.ID)
-            {
-                return BadRequest("ID is mismatch");
-            }
-            var existingPlaceHall = _unitOfWork.PlaceHallRepository.GetByID(id);
+
+            var existingPlaceHall = _placeHallService.GetByID(id);
 
             if (existingPlaceHall == null)
             {
@@ -66,8 +64,8 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _unitOfWork.PlaceHallRepository.Update(NewPlaceHall);
-                _unitOfWork.Save();
+                _placeHallService.Update(id, updatePlaceHall);
+
             }
             catch (Exception ex)
             {
@@ -82,11 +80,10 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var list = _unitOfWork.PlaceHallRepository.GetByID(id);
-                if (list == null)
+                var placeHall = _placeHallService.GetByID(id);
+                if (placeHall == null)
                     return NotFound();
-                _unitOfWork.PlaceHallRepository.Delete(id);
-                _unitOfWork.Save();
+                _placeHallService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

@@ -1,7 +1,9 @@
 ﻿using DataLayer.Model;
+using DataLayer.Models.PlaceAddress;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Services;
+using Services.Service;
 
 namespace PlaceAddressSeller.Controllers
 {
@@ -10,17 +12,17 @@ namespace PlaceAddressSeller.Controllers
     public class PlaceAddressController : ControllerBase
     {
         private readonly ILogger<PlaceAddressController> _logger;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IPlaceAddressService _placeAddressService;
 
-        public PlaceAddressController(ILogger<PlaceAddressController> logger, UnitOfWork unitOfWork)
+        public PlaceAddressController(ILogger<PlaceAddressController> logger, IPlaceAddressService placeAddress)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
+            _placeAddressService = placeAddress;
         }
         [HttpGet]
         public IActionResult Get()
         {
-            var list = _unitOfWork.PlaceAddressRepository.Get();
+            var list = _placeAddressService.GetPlaceAddresses();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -29,34 +31,29 @@ namespace PlaceAddressSeller.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var list = _unitOfWork.PlaceAddressRepository.GetByID(id);
+            var list = _placeAddressService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreatePlaceAddress( PlaceAddress NewPlaceAddress)
+        public IActionResult CreatePlaceAddress([FromBody] CreatePlaceAddress NewPlaceAddress)
         {
             try
             {
-                _unitOfWork.PlaceAddressRepository.Insert(NewPlaceAddress);
-                _unitOfWork.Save();
+                _placeAddressService.Create(NewPlaceAddress);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while creating the PlaceAddress.");
             }
-            return CreatedAtAction(nameof(Get), new { id = NewPlaceAddress.ID }, NewPlaceAddress); ;
+            return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdatePlaceAddress(long id, [FromBody] PlaceAddress NewPlaceAddress)
+        public IActionResult UpdatePlaceAddress(long id, [FromBody] UpdatePlaceAddress updatePlaceAddress)
         {
-            if (id != NewPlaceAddress.ID)
-            {
-                return BadRequest("ID is mismatch");
-            }
-            var existingPlaceAddress = _unitOfWork.PlaceAddressRepository.GetByID(id);
+            var existingPlaceAddress = _placeAddressService.GetByID(id);
 
             if (existingPlaceAddress == null)
             {
@@ -64,8 +61,7 @@ namespace PlaceAddressSeller.Controllers
             }
             try
             {
-                _unitOfWork.PlaceAddressRepository.Update(NewPlaceAddress);
-                _unitOfWork.Save();
+                _placeAddressService.Update(id,updatePlaceAddress);
             }
             catch (Exception ex)
             {
@@ -80,11 +76,10 @@ namespace PlaceAddressSeller.Controllers
         {
             try
             {
-                var list = _unitOfWork.PlaceAddressRepository.GetByID(id);
-                if (list == null)
+                var placeAddress = _placeAddressService.GetByID(id);
+                if (placeAddress == null)
                     return NotFound();
-                _unitOfWork.PlaceAddressRepository.Delete(id);
-                _unitOfWork.Save();
+                _placeAddressService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

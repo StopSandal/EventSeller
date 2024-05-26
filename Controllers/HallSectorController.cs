@@ -3,26 +3,29 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataLayer.Model;
 using Microsoft.IdentityModel.Tokens;
+using Services.Service;
+using DataLayer.Models.HallSector;
 
 
-namespace EventSeller.Controllers
+namespace hallSectorSeller.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class HallSectorController : ControllerBase
     {
         private readonly ILogger<HallSectorController> _logger;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IHallSectorService _hallSectorService;
 
-        public HallSectorController(ILogger<HallSectorController> logger, UnitOfWork unitOfWork)
+
+        public HallSectorController(ILogger<HallSectorController> logger, IHallSectorService hallSectorService)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
+            _hallSectorService = hallSectorService;
         }
         [HttpGet]
         public IActionResult Get()
         {
-            var list = _unitOfWork.HallSectorRepository.Get();
+            var list = _hallSectorService.GetHallSectors();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -31,18 +34,17 @@ namespace EventSeller.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var list = _unitOfWork.HallSectorRepository.GetByID(id);
+            var list = _hallSectorService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreateHallSector([FromBody] HallSector NewHallSector)
+        public IActionResult CreateHallSector([FromBody] CreateHallSector NewHallSector)
         {
             try
             {
-                _unitOfWork.HallSectorRepository.Insert(NewHallSector);
-                _unitOfWork.Save();
+                _hallSectorService.Create(NewHallSector);
             }
             catch (Exception ex)
             {
@@ -52,13 +54,9 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateHallSector(long id, [FromBody] HallSector NewHallSector)
+        public IActionResult UpdateHallSector(long id, [FromBody] UpdateHallSector updateHallSector)
         {
-            if (id != NewHallSector.ID)
-            {
-                return BadRequest("ID is mismatch");
-            }
-            var existingHallSector = _unitOfWork.HallSectorRepository.GetByID(id);
+            var existingHallSector = _hallSectorService.GetByID(id);
 
             if (existingHallSector == null)
             {
@@ -66,8 +64,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _unitOfWork.HallSectorRepository.Update(NewHallSector);
-                _unitOfWork.Save();
+                _hallSectorService.Update(id,updateHallSector);
             }
             catch (Exception ex)
             {
@@ -82,11 +79,10 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var list = _unitOfWork.HallSectorRepository.GetByID(id);
-                if (list == null)
+                var hallSector = _hallSectorService.GetByID(id);
+                if (hallSector == null)
                     return NotFound();
-                _unitOfWork.HallSectorRepository.Delete(id);
-                _unitOfWork.Save();
+                _hallSectorService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

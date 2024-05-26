@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataLayer.Model;
 using Microsoft.IdentityModel.Tokens;
+using Services.Service;
+using DataLayer.Models.TicketSeat;
 
 namespace EventSeller.Controllers
 {
@@ -11,17 +13,17 @@ namespace EventSeller.Controllers
     public class TicketSeatController : ControllerBase
     {
         private readonly ILogger<TicketSeatController> _logger;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly ITicketSeatService _ticketSeatService;
 
-        public TicketSeatController(ILogger<TicketSeatController> logger, UnitOfWork unitOfWork)
+        public TicketSeatController(ILogger<TicketSeatController> logger, ITicketSeatService ticketSeatService)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
+            _ticketSeatService = ticketSeatService;
         }
         [HttpGet]
         public IActionResult Get()
         {
-            var list = _unitOfWork.TicketSeatRepository.Get();
+            var list = _ticketSeatService.GetTicketSeats();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -30,18 +32,17 @@ namespace EventSeller.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var list = _unitOfWork.TicketSeatRepository.GetByID(id);
+            var list = _ticketSeatService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreateTicketSeat([FromBody] TicketSeat NewTicketSeat)
+        public IActionResult CreateTicketSeat([FromBody] CreateTicketSeat NewTicketSeat)
         {
             try
             {
-                _unitOfWork.TicketSeatRepository.Insert(NewTicketSeat);
-                _unitOfWork.Save();
+                _ticketSeatService.Create(NewTicketSeat);
             }
             catch (Exception ex)
             {
@@ -51,13 +52,9 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateTicketSeat(long id, [FromBody] TicketSeat NewTicketSeat)
+        public IActionResult UpdateTicketSeat(long id, [FromBody] UpdateTicketSeat updateTicketSeat)
         {
-            if (id != NewTicketSeat.ID)
-            {
-                return BadRequest("ID is mismatch");
-            }
-            var existingTicketSeat = _unitOfWork.TicketSeatRepository.GetByID(id);
+            var existingTicketSeat = _ticketSeatService.GetByID(id);
 
             if (existingTicketSeat == null)
             {
@@ -65,8 +62,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _unitOfWork.TicketSeatRepository.Update(NewTicketSeat);
-                _unitOfWork.Save();
+                _ticketSeatService.Update(id,updateTicketSeat);
             }
             catch (Exception ex)
             {
@@ -81,11 +77,10 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var list = _unitOfWork.TicketSeatRepository.GetByID(id);
-                if (list == null)
+                var ticketSeat = _ticketSeatService.GetByID(id);
+                if (ticketSeat == null)
                     return NotFound();
-                _unitOfWork.TicketSeatRepository.Delete(id);
-                _unitOfWork.Save();
+                _ticketSeatService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

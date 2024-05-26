@@ -1,9 +1,7 @@
-﻿
-using DataLayer.Model;
-using Microsoft.AspNetCore.Http;
+﻿using DataLayer.Models.Event;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Services;
+using Services.Service;
 using System.Collections.Generic;
 
 namespace EventSeller.Controllers
@@ -13,17 +11,17 @@ namespace EventSeller.Controllers
     public class EventController : ControllerBase
     {
         private readonly ILogger<EventController> _logger;
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IEventService _eventService;
 
-        public EventController(ILogger<EventController> logger, UnitOfWork unitOfWork)
+        public EventController(ILogger<EventController> logger, IEventService eventService)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
+            _eventService = eventService;
         }
         [HttpGet]
         public IActionResult Get()
         {
-            var list = _unitOfWork.EventRepository.Get();
+            var list = _eventService.GetEvents();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -32,18 +30,17 @@ namespace EventSeller.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var list = _unitOfWork.EventRepository.GetByID(id);
+            var list = _eventService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreateEvent([FromBody] Event NewEvent)
+        public IActionResult CreateEvent([FromBody] CreateEvent NewEvent)
         {
             try
             {
-                _unitOfWork.EventRepository.Insert(NewEvent);
-                _unitOfWork.Save();
+                _eventService.Create(NewEvent);
             }
             catch(Exception ex)
             {
@@ -53,13 +50,9 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateEvent(long id,[FromBody] Event NewEvent) 
+        public IActionResult UpdateEvent(long id,[FromBody] UpdateEvent updateEvent) 
         {
-            if (id != NewEvent.ID)
-            {
-                return BadRequest("ID is mismatch");
-            }
-            var existingEvent = _unitOfWork.EventRepository.GetByID(id);
+            var existingEvent = _eventService.GetByID(id);
 
             if (existingEvent == null)
             {
@@ -67,8 +60,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _unitOfWork.EventRepository.Update(NewEvent);
-                _unitOfWork.Save();
+                _eventService.Update(id, updateEvent);
             }
             catch(Exception ex) 
             {
@@ -83,11 +75,10 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var list = _unitOfWork.EventRepository.GetByID(id);
-                if (list == null)
+                var existingEvent = _eventService.GetByID(id);
+                if (existingEvent == null)
                     return NotFound();
-                _unitOfWork.EventRepository.Delete(id);
-                _unitOfWork.Save();
+                _eventService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)
