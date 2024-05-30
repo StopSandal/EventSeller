@@ -6,38 +6,11 @@ Ticket Management Web API
 This API supports CRUD operations via REST architecture for managing tickets, events, place addresses, place halls, hall sectors, and ticket seats.
 
 Usage
-Create (POST):
+Create (POST) methods
+Read (GET) methods
+Update (PUT) methods
+Delete (DELETE) methods
 
-/tickets: Create a new ticket.
-/events: Create a new event.
-/placeaddresses: Create a new place address.
-/placehalls: Create a new place hall.
-/hallsectors: Create a new hall sector.
-/ticketseats: Create a new ticket seat.
-Read (GET):
-
-/tickets: Get all tickets.
-/events: Get all events.
-/placeaddresses: Get all place addresses.
-/placehalls: Get all place halls.
-/hallsectors: Get all hall sectors.
-/ticketseats: Get all ticket seats.
-Update (PUT/PATCH):
-
-/tickets/{id}: Update a specific ticket.
-/events/{id}: Update a specific event.
-/placeaddresses/{id}: Update a specific place address.
-/placehalls/{id}: Update a specific place hall.
-/hallsectors/{id}: Update a specific hall sector.
-/ticketseats/{id}: Update a specific ticket seat.
-Delete (DELETE):
-
-/tickets/{id}: Delete a specific ticket.
-/events/{id}: Delete a specific event.
-/placeaddresses/{id}: Delete a specific place address.
-/placehalls/{id}: Delete a specific place hall.
-/hallsectors/{id}: Delete a specific hall sector.
-/ticketseats/{id}: Delete a specific ticket seat.
 
 The solution consists of 3 projects:
 
