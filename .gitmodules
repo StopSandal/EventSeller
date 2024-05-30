@@ -1,6 +1,6 @@
-[submodule "EventSeller.Services"]
-	path = EventSeller.Services
+[submodule "Services"]
+	path = ../Services
 	url = https://github.com/StopSandal/EventSeller.Services
-[submodule "EventSeller.DataLayer"]
-	path = EventSeller.DataLayer
+[submodule "DataLayer"]
+	path = ../DataLayer
 	url = https://github.com/StopSandal/EventSeller.DataLayer
