@@ -1,14 +1,15 @@
-Here's the corrected version of your ReadMe:
-
----
-
 Ticket Management Web API
+
 This API supports CRUD operations via REST architecture for managing tickets, events, place addresses, place halls, hall sectors, and ticket seats.
 
 Usage
+
 Create (POST) methods
+
 Read (GET) methods
+
 Update (PUT) methods
+
 Delete (DELETE) methods
 
 
