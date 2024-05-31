@@ -37,7 +37,7 @@ namespace PlaceAddressSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreatePlaceAddress([FromBody] CreatePlaceAddress NewPlaceAddress)
+        public IActionResult AddPlaceAddressDto([FromBody] AddPlaceAddressDto NewPlaceAddress)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace PlaceAddressSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdatePlaceAddress(long id, [FromBody] UpdatePlaceAddress updatePlaceAddress)
+        public IActionResult EditPlaceAddressDto(long id, [FromBody] EditPlaceAddressDto EditPlaceAddressDto)
         {
             var existingPlaceAddress = _placeAddressService.GetByID(id);
 
@@ -61,7 +61,7 @@ namespace PlaceAddressSeller.Controllers
             }
             try
             {
-                _placeAddressService.Update(id,updatePlaceAddress);
+                _placeAddressService.Update(id,EditPlaceAddressDto);
             }
             catch (Exception ex)
             {

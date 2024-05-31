@@ -38,7 +38,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreateTicketSeat([FromBody] CreateTicketSeat NewTicketSeat)
+        public IActionResult AddTicketSeatDto([FromBody] AddTicketSeatDto NewTicketSeat)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateTicketSeat(long id, [FromBody] UpdateTicketSeat updateTicketSeat)
+        public IActionResult EditTicketSeatDto(long id, [FromBody] EditTicketSeatDto EditTicketSeatDto)
         {
             var existingTicketSeat = _ticketSeatService.GetByID(id);
 
@@ -62,7 +62,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _ticketSeatService.Update(id,updateTicketSeat);
+                _ticketSeatService.Update(id,EditTicketSeatDto);
             }
             catch (Exception ex)
             {

@@ -40,7 +40,7 @@ namespace hallSectorSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreateHallSector([FromBody] CreateHallSector NewHallSector)
+        public IActionResult AddHallSectorDto([FromBody] AddHallSectorDto NewHallSector)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace hallSectorSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateHallSector(long id, [FromBody] UpdateHallSector updateHallSector)
+        public IActionResult EditHallSectorDto(long id, [FromBody] EditHallSectorDto EditHallSectorDto)
         {
             var existingHallSector = _hallSectorService.GetByID(id);
 
@@ -69,7 +69,7 @@ namespace hallSectorSeller.Controllers
             }
             try
             {
-                _hallSectorService.Update(id,updateHallSector);
+                _hallSectorService.Update(id,EditHallSectorDto);
             }
             catch (InvalidOperationException ex)
             {

@@ -36,7 +36,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreateEvent([FromBody] CreateEvent NewEvent)
+        public IActionResult AddEventDto([FromBody] AddEventDto NewEvent)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateEvent(long id,[FromBody] UpdateEvent updateEvent) 
+        public IActionResult EditEventDto(long id,[FromBody] EditEventDto EditEventDto) 
         {
             var existingEvent = _eventService.GetByID(id);
 
@@ -60,7 +60,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _eventService.Update(id, updateEvent);
+                _eventService.Update(id, EditEventDto);
             }
             catch(Exception ex) 
             {

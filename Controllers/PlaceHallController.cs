@@ -39,7 +39,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreatePlaceHall([FromBody] CreatePlaceHall NewPlaceHall)
+        public IActionResult AddPlaceHallDto([FromBody] AddPlaceHallDto NewPlaceHall)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdatePlaceHall(long id, [FromBody] UpdatePlaceHall updatePlaceHall)
+        public IActionResult EditPlaceHallDto(long id, [FromBody] EditPlaceHallDto EditPlaceHallDto)
         {
 
             var existingPlaceHall = _placeHallService.GetByID(id);
@@ -69,7 +69,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _placeHallService.Update(id, updatePlaceHall);
+                _placeHallService.Update(id, EditPlaceHallDto);
 
             }
             catch (InvalidOperationException ex)

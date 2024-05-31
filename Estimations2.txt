@@ -8,7 +8,7 @@
   * Estimated: 30 min
   * Real: -
 2. Read about Model naming, and rename them
-  * Estimated: 70 min
+  * Estimated: 70 min 16:37
   * Real: -
 3. add summury comments for public methods
   * Estimated: 90 min
