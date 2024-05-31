@@ -8,9 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSeller", "EventSeller.
 		{CB1D03F5-39C1-4DBB-B70D-27E9823C68C1} = {CB1D03F5-39C1-4DBB-B70D-27E9823C68C1}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "..\DataLayer\DataLayer.csproj", "{2AA4F240-0CCA-4A62-8979-AF5FBFABEF2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSeller.DataLayer", "..\EventSeller.DataLayer\EventSeller.DataLayer.csproj", "{2AA4F240-0CCA-4A62-8979-AF5FBFABEF2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "..\Services\Services.csproj", "{CB1D03F5-39C1-4DBB-B70D-27E9823C68C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSeller.Services", "..\EventSeller.Services\EventSeller.Services.csproj", "{CB1D03F5-39C1-4DBB-B70D-27E9823C68C1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2AA4F240-0CCA-4A62-8979-AF5FBFABEF2D} = {2AA4F240-0CCA-4A62-8979-AF5FBFABEF2D}
 	EndProjectSection

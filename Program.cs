@@ -1,5 +1,6 @@
 using DataLayer.Model;
 using DataLayer.Model.EF;
+using Microsoft.EntityFrameworkCore;
 using Services;
 using Services.Service;
 using System.Drawing.Text;
@@ -14,7 +15,8 @@ builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
 
-builder.Services.AddDbContext<SellerContext>();
+builder.Services.AddDbContext<SellerContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SellerContextConnection")));
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 RegisterServices(builder.Services);
