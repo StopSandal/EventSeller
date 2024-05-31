@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using Services.Service;
 using DataLayer.Models.PlaceHall;
 
-
 namespace EventSeller.Controllers
 {
     [Route("api/[controller]")]
@@ -22,28 +21,28 @@ namespace EventSeller.Controllers
             _placeHallService = placeHallService;
         }
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            var list = _placeHallService.GetPlaceHalls();
+            var list = await _placeHallService.GetPlaceHalls();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
             return Ok(list);
         }
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public async Task<IActionResult> GetAsync(long id)
         {
-            var list = _placeHallService.GetByID(id);
+            var list = await _placeHallService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult AddPlaceHallDto([FromBody] AddPlaceHallDto NewPlaceHall)
+        public async Task<IActionResult> AddPlaceHallDtoAsync([FromBody] AddPlaceHallDto NewPlaceHall)
         {
             try
             {
-                _placeHallService.Create(NewPlaceHall);
+                await _placeHallService.Create(NewPlaceHall);
             }
             catch (InvalidOperationException ex)
             {
@@ -58,10 +57,10 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult EditPlaceHallDto(long id, [FromBody] EditPlaceHallDto EditPlaceHallDto)
+        public async Task<IActionResult> EditPlaceHallDtoAsync(long id, [FromBody] EditPlaceHallDto EditPlaceHallDto)
         {
 
-            var existingPlaceHall = _placeHallService.GetByID(id);
+            var existingPlaceHall = await _placeHallService.GetByID(id);
 
             if (existingPlaceHall == null)
             {
@@ -69,7 +68,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _placeHallService.Update(id, EditPlaceHallDto);
+                await _placeHallService.Update(id, EditPlaceHallDto);
 
             }
             catch (InvalidOperationException ex)
@@ -86,14 +85,14 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeletePlaceHall(long id)
+        public async Task<IActionResult> DeletePlaceHallAsync(long id)
         {
             try
             {
-                var placeHall = _placeHallService.GetByID(id);
+                var placeHall = await _placeHallService.GetByID(id);
                 if (placeHall == null)
                     return NotFound();
-                _placeHallService.Delete(id);
+                await _placeHallService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

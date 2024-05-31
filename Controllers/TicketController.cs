@@ -21,28 +21,28 @@ namespace EventSeller.Controllers
             _ticketService = ticketService;
         }
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            var list = _ticketService.GetTickets();
+            var list = await _ticketService.GetTickets();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
             return Ok(list);
         }
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public async Task<IActionResult> GetAsync(long id)
         {
-            var list = _ticketService.GetByID(id);
+            var list = await _ticketService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult AddTicketDto([FromBody] AddTicketDto NewTicket)
+        public async Task<IActionResult> AddTicketDtoAsync([FromBody] AddTicketDto NewTicket)
         {
             try
             {
-                _ticketService.Create(NewTicket);
+                await _ticketService.Create(NewTicket);
             }
             catch (Exception ex)
             {
@@ -52,9 +52,9 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult EditTicketDto(long id, [FromBody] EditTicketDto EditTicketDto)
+        public async Task<IActionResult> EditTicketDtoAsync(long id, [FromBody] EditTicketDto EditTicketDto)
         {
-            var existingTicket = _ticketService.GetByID(id);
+            var existingTicket = await _ticketService.GetByID(id);
 
             if (existingTicket == null)
             {
@@ -62,7 +62,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _ticketService.Update(id,EditTicketDto);
+                await _ticketService.Update(id,EditTicketDto);
             }
             catch (Exception ex)
             {
@@ -73,14 +73,14 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteTicket(long id)
+        public async Task<IActionResult> DeleteTicketAsync(long id)
         {
             try
             {
-                var ticket = _ticketService.GetByID(id);
+                var ticket = await _ticketService.GetByID(id);
                 if (ticket == null)
                     return NotFound();
-                _ticketService.Delete(id);
+                await _ticketService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

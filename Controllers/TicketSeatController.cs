@@ -21,28 +21,28 @@ namespace EventSeller.Controllers
             _ticketSeatService = ticketSeatService;
         }
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            var list = _ticketSeatService.GetTicketSeats();
+            var list = await _ticketSeatService.GetTicketSeats();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
             return Ok(list);
         }
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public async Task<IActionResult> GetAsync(long id)
         {
-            var list = _ticketSeatService.GetByID(id);
+            var list = await _ticketSeatService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult AddTicketSeatDto([FromBody] AddTicketSeatDto NewTicketSeat)
+        public async Task<IActionResult> AddTicketSeatDtoAsync([FromBody] AddTicketSeatDto NewTicketSeat)
         {
             try
             {
-                _ticketSeatService.Create(NewTicketSeat);
+                await _ticketSeatService.Create(NewTicketSeat);
             }
             catch (Exception ex)
             {
@@ -52,9 +52,9 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult EditTicketSeatDto(long id, [FromBody] EditTicketSeatDto EditTicketSeatDto)
+        public async Task<IActionResult> EditTicketSeatDtoAsync(long id, [FromBody] EditTicketSeatDto EditTicketSeatDto)
         {
-            var existingTicketSeat = _ticketSeatService.GetByID(id);
+            var existingTicketSeat = await _ticketSeatService.GetByID(id);
 
             if (existingTicketSeat == null)
             {
@@ -62,7 +62,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _ticketSeatService.Update(id,EditTicketSeatDto);
+                await _ticketSeatService.Update(id,EditTicketSeatDto);
             }
             catch (Exception ex)
             {
@@ -73,14 +73,14 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteTicketSeat(long id)
+        public async Task<IActionResult> DeleteTicketSeatAsync(long id)
         {
             try
             {
-                var ticketSeat = _ticketSeatService.GetByID(id);
+                var ticketSeat = await _ticketSeatService.GetByID(id);
                 if (ticketSeat == null)
                     return NotFound();
-                _ticketSeatService.Delete(id);
+                await _ticketSeatService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

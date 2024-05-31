@@ -5,12 +5,12 @@
   * Estimated: 20 min
   * Real: 9 min
 1. Make asynchronous Controllers, Services, add async version for Repository methods
-  * Estimated: 30 min
-  * Real: -
+  * Estimated: 30 min 
+  * Real: 25 min
 2. Read about Model naming, and rename them
-  * Estimated: 70 min 16:37
-  * Real: -
-3. add summury comments for public methods
+  * Estimated: 70 min
+  * Real: 83 min
+3. add summary comments for public methods
   * Estimated: 90 min
   * Real: -
 4. remove IEntity infterface
@@ -18,7 +18,7 @@
   * Real: 14 min
 5. Make repository and UOF more abstract
   * Estimated: 40 min
-  * Real: -
+  * Real: - 25 min
 
 6. Read about Bearer jwt
   * Estimated: 2 h

@@ -19,28 +19,28 @@ namespace EventSeller.Controllers
             _eventService = eventService;
         }
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            var list = _eventService.GetEvents();
+            var list = await _eventService.GetEvents();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
             return Ok(list);
         }
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public async Task<IActionResult> GetAsync(long id)
         {
-            var list = _eventService.GetByID(id);
+            var list = await _eventService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult AddEventDto([FromBody] AddEventDto NewEvent)
+        public async Task<IActionResult> AddEventDtoAsync([FromBody] AddEventDto NewEvent)
         {
             try
             {
-                _eventService.Create(NewEvent);
+                await _eventService.Create(NewEvent);
             }
             catch(Exception ex)
             {
@@ -50,9 +50,9 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult EditEventDto(long id,[FromBody] EditEventDto EditEventDto) 
+        public async Task<IActionResult> EditEventDtoAsync(long id,[FromBody] EditEventDto EditEventDto) 
         {
-            var existingEvent = _eventService.GetByID(id);
+            var existingEvent = await _eventService.GetByID(id);
 
             if (existingEvent == null)
             {
@@ -60,7 +60,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _eventService.Update(id, EditEventDto);
+                await _eventService.Update(id, EditEventDto);
             }
             catch(Exception ex) 
             {
@@ -71,14 +71,14 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteEvent(long id) 
+        public async Task<IActionResult> DeleteEventAsync(long id) 
         {
             try
             {
-                var existingEvent = _eventService.GetByID(id);
+                var existingEvent = await _eventService.GetByID(id);
                 if (existingEvent == null)
                     return NotFound();
-                _eventService.Delete(id);
+                await _eventService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)
