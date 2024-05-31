@@ -14,8 +14,8 @@
   * Estimated: 90 min
   * Real: -
 4. remove IEntity infterface
-  * Estimated: 15 min 16/21
-  * Real: -
+  * Estimated: 15 min
+  * Real: 14 min
 5. Make repository and UOF more abstract
   * Estimated: 40 min
   * Real: -
