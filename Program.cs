@@ -1,5 +1,6 @@
 using DataLayer.Model;
 using DataLayer.Model.EF;
+using EventSeller.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Services;
 using Services.Service;
@@ -17,7 +18,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 builder.Services.AddDbContext<SellerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SellerContextConnection")));
-builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 RegisterServices(builder.Services);
 

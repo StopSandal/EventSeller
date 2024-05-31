@@ -18,7 +18,7 @@
   * Real: 14 min
 5. Make repository and UOF more abstract
   * Estimated: 40 min
-  * Real: - 25 min
+  * Real: 25 min
 
 6. Read about Bearer jwt
   * Estimated: 2 h
