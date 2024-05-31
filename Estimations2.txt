@@ -1,0 +1,62 @@
+﻿0. plan task
+  * Estimated: 1h 
+  * Real: 47 min
+0,5. Answer questions
+  * Estimated: 20 min
+  * Real: 9 min
+1. Make asynchronous Controllers, Services, add async version for Repository methods
+  * Estimated: 30 min
+  * Real: -
+2. Read about Model naming, and rename them
+  * Estimated: 70 min
+  * Real: -
+3. add summury comments for public methods
+  * Estimated: 90 min
+  * Real: -
+4. remove IEntity infterface
+  * Estimated: 15 min 16/21
+  * Real: -
+5. Make repository and UOF more abstract
+  * Estimated: 40 min
+  * Real: -
+
+6. Read about Bearer jwt
+  * Estimated: 2 h
+  * Real: -
+7. Read about .net identity
+  * Estimated: 4 h
+  * Real: -
+
+8. add roles 
+  * Estimated: 40 min
+  * Real: -
+9. add roles check
+  * Estimated: 1,5 h
+  * Real: -
+10. add actions with roles 
+  * Estimated: 1h
+  * Real: -
+11. add jtw token
+  * Estimated: 45 min
+  * Real: -
+12. add jtw refresh api
+  * Estimated: 2h
+  * Real: -
+13. add autorization check
+  * Estimated: 45 min
+  * Real: -
+
+14. Add test data
+  * Estimated: 20 min
+  * Real: -
+15. Test app
+  * Estimated: 1 h
+  * Real: -
+
+?? Time buffer
+  * Estimated: 3 h
+  * Real: -
+
+Total 
+  * Estimated: 19 h [with buffer 22 h]
+  * Real: -
