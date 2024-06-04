@@ -12,7 +12,7 @@
   * Real: 83 min
 3. add summary comments for public methods
   * Estimated: 90 min
-  * Real: -
+  * Real: - 79 min
 4. remove IEntity infterface
   * Estimated: 15 min
   * Real: 14 min
@@ -22,14 +22,14 @@
 
 6. Read about Bearer jwt
   * Estimated: 2 h
-  * Real: -
+  * Real: - 60 min
 7. Read about .net identity
   * Estimated: 4 h
-  * Real: -
+  * Real: 61 /
 
 8. add roles 
   * Estimated: 40 min
-  * Real: -
+  * Real: 68 min
 9. add roles check
   * Estimated: 1,5 h
   * Real: -
