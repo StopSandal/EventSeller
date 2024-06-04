@@ -22,10 +22,10 @@
 
 6. Read about Bearer jwt
   * Estimated: 2 h
-  * Real: - 60 min
+  * Real: - 90 min
 7. Read about .net identity
   * Estimated: 4 h
-  * Real: 61 /
+  * Real: 125 /
 
 8. add roles 
   * Estimated: 40 min
@@ -38,7 +38,7 @@
   * Real: -
 11. add jtw token
   * Estimated: 45 min
-  * Real: -
+  * Real: 72 min
 12. add jtw refresh api
   * Estimated: 2h
   * Real: -
