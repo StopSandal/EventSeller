@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using DataLayer.Model;
 using Services.Service;
 using DataLayer.Models.Ticket;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventSeller.Controllers
 {
@@ -21,6 +22,7 @@ namespace EventSeller.Controllers
             _ticketService = ticketService;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAsync()
         {
             var list = await _ticketService.GetTickets();
@@ -29,7 +31,9 @@ namespace EventSeller.Controllers
                 return NoContent();
             return Ok(list);
         }
+
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
             var list = await _ticketService.GetByID(id);
@@ -38,6 +42,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> AddTicketDtoAsync([FromBody] AddTicketDto NewTicket)
         {
             try
@@ -52,6 +57,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> EditTicketDtoAsync(long id, [FromBody] EditTicketDto EditTicketDto)
         {
             var existingTicket = await _ticketService.GetByID(id);
@@ -72,6 +78,7 @@ namespace EventSeller.Controllers
 
             return NoContent();
         }
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTicketAsync(long id)
         {

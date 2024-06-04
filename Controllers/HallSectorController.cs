@@ -5,6 +5,7 @@ using DataLayer.Model;
 using Microsoft.IdentityModel.Tokens;
 using Services.Service;
 using DataLayer.Models.HallSector;
+using Microsoft.AspNetCore.Authorization;
 
 namespace hallSectorSeller.Controllers
 {
@@ -22,6 +23,7 @@ namespace hallSectorSeller.Controllers
             _hallSectorService = hallSectorService;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAsync()
         {
             var list = await _hallSectorService.GetHallSectors();
@@ -31,6 +33,7 @@ namespace hallSectorSeller.Controllers
             return Ok(list);
         }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
             var list = await _hallSectorService.GetByID(id);
@@ -39,6 +42,7 @@ namespace hallSectorSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> AddHallSectorDtoAsync([FromBody] AddHallSectorDto NewHallSector)
         {
             try
@@ -58,6 +62,7 @@ namespace hallSectorSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> EditHallSectorDtoAsync(long id, [FromBody] EditHallSectorDto EditHallSectorDto)
         {
             var existingHallSector = await _hallSectorService.GetByID(id);
@@ -84,6 +89,7 @@ namespace hallSectorSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> DeleteHallSectorAsync(long id)
         {
             try

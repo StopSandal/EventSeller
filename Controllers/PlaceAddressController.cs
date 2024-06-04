@@ -1,5 +1,6 @@
 ﻿using DataLayer.Model;
 using DataLayer.Models.PlaceAddress;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Services;
@@ -20,6 +21,7 @@ namespace PlaceAddressSeller.Controllers
             _placeAddressService = placeAddress;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAsync()
         {
             var list = await _placeAddressService.GetPlaceAddresses();
@@ -29,6 +31,7 @@ namespace PlaceAddressSeller.Controllers
             return Ok(list);
         }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
             var list = await _placeAddressService.GetByID(id);
@@ -37,6 +40,7 @@ namespace PlaceAddressSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> AddPlaceAddressDtoAsync([FromBody] AddPlaceAddressDto NewPlaceAddress)
         {
             try
@@ -51,6 +55,7 @@ namespace PlaceAddressSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> EditPlaceAddressDtoAsync(long id, [FromBody] EditPlaceAddressDto EditPlaceAddressDto)
         {
             var existingPlaceAddress = await _placeAddressService.GetByID(id);
@@ -72,6 +77,7 @@ namespace PlaceAddressSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> DeletePlaceAddressAsync(long id)
         {
             try

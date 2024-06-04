@@ -1,6 +1,7 @@
 using DataLayer.Model;
 using DataLayer.Model.EF;
 using EventSeller.DataLayer.Entities;
+using EventSeller.Helpers;
 using EventSeller.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,10 @@ builder.Services.AddIdentity<User,IdentityRole>()
                 .AddEntityFrameworkStores<SellerContext>()
                 .AddDefaultTokenProviders();
 
+builder.Services.AddAuthorization( options => 
+    options.AddAuthorizationPolicies()
+    );
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -39,7 +44,20 @@ await SetupRolesAsync(app.Services);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API V1");
+
+        // Enable OAuth2.0 authentication input
+        c.OAuthClientId("swagger");
+        c.OAuthClientSecret("swagger_secret");
+        c.OAuthRealm("your-realm");
+        c.OAuthAppName("Swagger UI");
+
+        // Add authorization scopes
+        c.OAuthScopeSeparator(" ");
+        c.OAuthUseBasicAuthenticationWithAccessCodeGrant();
+    });
 }
 
 app.UseAuthentication();

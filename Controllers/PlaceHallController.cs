@@ -5,6 +5,7 @@ using DataLayer.Model;
 using Microsoft.IdentityModel.Tokens;
 using Services.Service;
 using DataLayer.Models.PlaceHall;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventSeller.Controllers
 {
@@ -21,6 +22,7 @@ namespace EventSeller.Controllers
             _placeHallService = placeHallService;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAsync()
         {
             var list = await _placeHallService.GetPlaceHalls();
@@ -30,6 +32,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
             var list = await _placeHallService.GetByID(id);
@@ -38,6 +41,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> AddPlaceHallDtoAsync([FromBody] AddPlaceHallDto NewPlaceHall)
         {
             try
@@ -57,6 +61,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> EditPlaceHallDtoAsync(long id, [FromBody] EditPlaceHallDto EditPlaceHallDto)
         {
 
@@ -85,6 +90,7 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> DeletePlaceHallAsync(long id)
         {
             try

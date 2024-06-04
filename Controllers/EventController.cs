@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models.Event;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Services.Service;
@@ -19,6 +20,7 @@ namespace EventSeller.Controllers
             _eventService = eventService;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAsync()
         {
             var list = await _eventService.GetEvents();
@@ -28,6 +30,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
             var list = await _eventService.GetByID(id);
@@ -36,6 +39,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
+        [Authorize(Policy = "EventManagerOrAdmin")]
         public async Task<IActionResult> AddEventDtoAsync([FromBody] AddEventDto NewEvent)
         {
             try
@@ -50,6 +54,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
+        [Authorize(Policy = "EventManagerOrAdmin")]
         public async Task<IActionResult> EditEventDtoAsync(long id,[FromBody] EditEventDto EditEventDto) 
         {
             var existingEvent = await _eventService.GetByID(id);
@@ -71,6 +76,7 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Policy = "EventManagerOrAdmin")]
         public async Task<IActionResult> DeleteEventAsync(long id) 
         {
             try

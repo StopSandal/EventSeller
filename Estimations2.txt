@@ -32,7 +32,7 @@
   * Real: 68 min
 9. add roles check
   * Estimated: 1,5 h
-  * Real: -
+  * Real: 53 min
 10. add actions with roles 
   * Estimated: 1h
   * Real: -
