@@ -1,4 +1,5 @@
-﻿using EventSeller.Services.Interfaces;
+﻿using EventSeller.Services.Helpers;
+using EventSeller.Services.Interfaces;
 using EventSeller.Services.Service;
 using Services;
 using Services.Service;
@@ -17,6 +18,7 @@ namespace EventSeller.Helpers
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IJWTFactory, JWTFactory>();
 
             return services;
         }

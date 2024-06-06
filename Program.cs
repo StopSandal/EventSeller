@@ -31,9 +31,17 @@ builder.Services.AddDbContext<SellerContext>(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.RegisterServices();
 
-builder.Services.AddIdentity<User,IdentityRole>()
-                .AddEntityFrameworkStores<SellerContext>()
-                .AddDefaultTokenProviders();
+builder.Services.AddIdentity<User,IdentityRole>(options =>
+    {
+        // Configure password requirements
+        options.Password.RequireDigit = false; // Turn off digit requirement
+        options.Password.RequiredLength = 4; // Set minimum password length
+        options.Password.RequireNonAlphanumeric = false; // Turn off non-alphanumeric character requirement
+        options.Password.RequireUppercase = false; // Turn off uppercase letter requirement
+        options.Password.RequireLowercase = false; // Turn off lowercase letter requirement
+    })
+    .AddEntityFrameworkStores<SellerContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization( options => 
     options.AddAuthorizationPolicies()

@@ -25,7 +25,7 @@
   * Real: - 90 min
 7. Read about .net identity
   * Estimated: 4 h
-  * Real: 125 /
+  * Real: 155 /
 
 8. add roles 
   * Estimated: 40 min
@@ -35,7 +35,7 @@
   * Real: 53 min
 10. add actions with roles 
   * Estimated: 1h
-  * Real: -
+  * Real: 80 min
 11. add jtw token
   * Estimated: 45 min
   * Real: 72 min
@@ -56,6 +56,9 @@
 ?? Time buffer
   * Estimated: 3 h
   * Real: -
+17. Add User Service
+  * Estimated: 40 min
+  * Real: - 31 min
 
 Total 
   * Estimated: 19 h [with buffer 22 h]
