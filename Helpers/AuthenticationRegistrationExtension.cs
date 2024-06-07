@@ -17,20 +17,19 @@ namespace EventSeller.Helpers
 
             return options;
         }
-        public static JwtBearerOptions SetDefaultJwtBearerOptions(this JwtBearerOptions options,string secretKey)
+        public static JwtBearerOptions SetDefaultJwtBearerOptions(this JwtBearerOptions options, string secretKey)
         {
+            options.SaveToken = true;
             options.RequireHttpsMetadata = false;
-            options.SaveToken = false;
-            options.TokenValidationParameters = new TokenValidationParameters
+            options.TokenValidationParameters = new TokenValidationParameters()
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8
-                    .GetBytes(secretKey)
-                ),
                 ValidateIssuer = false,
                 ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ClockSkew = TimeSpan.Zero,
+
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
             };
 
             return options;

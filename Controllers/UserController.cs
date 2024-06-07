@@ -37,23 +37,21 @@ namespace EventSeller.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous] 
-        public async Task<IActionResult> Login([FromBody] LoginUserVM user) // Specify that the user data comes from the request body.
+        public async Task<IActionResult> Login([FromBody] LoginUserVM user) 
         {
-            string token;
+
             try
             {
-                token = await _userService.Login(user);
+               var token = await _userService.Login(user);
+
+               return Ok(token);
             }
             catch (InvalidDataException ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            if (string.IsNullOrEmpty(token)) // Use string.IsNullOrEmpty() to check for null or empty string.
-            {
-                return BadRequest(new { message = "Username or password is incorrect" }); // Corrected the message for clarity.
-            }
-            return Ok(token);
+
         }
 
         [HttpPut("Update/{id}")]
@@ -125,6 +123,25 @@ namespace EventSeller.Controllers
             catch (InvalidDataException ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("Refresh")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken([FromBody] TokenVM token)
+        {
+            if (token == null)
+            {
+                return BadRequest(new { message = "Invalid client request" });
+            }
+
+            try
+            {
+                var newToken = await _userService.RefreshToken(token);
+                return Ok(newToken);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
         }
     }

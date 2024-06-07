@@ -28,8 +28,8 @@ builder.Services.AddDbContext<SellerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SellerContextConnection")
     ,x => x.MigrationsAssembly("EventSeller.DataLayer")));
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.RegisterServices();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddIdentity<User,IdentityRole>(options =>
     {
@@ -79,8 +79,6 @@ builder.Services.AddSwaggerGen(c => {
 
 var app = builder.Build();
 
-await SetupRolesAsync(app.Services);
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -95,19 +93,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-async Task SetupRolesAsync(IServiceProvider appService)
-{
-    using (var scope = appService.CreateScope())
-    {
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var roles = new[] { "Basic", "Event manager", "Venue manager", "Admin", "Super admin" };
-        foreach (var role in roles)
-        {
-            if (!await roleManager.RoleExistsAsync(role))
-            {
-                await roleManager.CreateAsync(new IdentityRole(role));
-            }
-        }
-    }
-}

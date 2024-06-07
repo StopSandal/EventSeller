@@ -22,10 +22,10 @@
 
 6. Read about Bearer jwt
   * Estimated: 2 h
-  * Real: - 90 min
+  * Real: 110 min
 7. Read about .net identity
   * Estimated: 4 h
-  * Real: 155 /
+  * Real: 160 /
 
 8. add roles 
   * Estimated: 40 min
@@ -41,7 +41,7 @@
   * Real: 72 min
 12. add jtw refresh api
   * Estimated: 2h
-  * Real: -
+  * Real: 153 min
 13. add autorization check
   * Estimated: 45 min
   * Real: -
@@ -59,6 +59,9 @@
 17. Add User Service
   * Estimated: 40 min
   * Real: - 31 min
+18. Add migration to insert roles and add First Super User Admin
+  * Estimated: 15 min
+  * Real: 10 min
 
 Total 
   * Estimated: 19 h [with buffer 22 h]
