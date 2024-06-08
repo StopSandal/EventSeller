@@ -29,4 +29,4 @@ Then, follow these steps:
 
 1. Create a database for your data on your server.
 2. Update the connection string in `appsettings.json` to point to your database.
-3. Finally, use Entity Framework tools to update your database schema.
+3. Finally, use Entity Framework tools to update your database schema.  Ensure that your project is configured to work with Entity Framework, specifically targeting the [EventSeller.DataLayer] project.
