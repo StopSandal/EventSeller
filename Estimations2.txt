@@ -12,7 +12,7 @@
   * Real: 83 min
 3. add summary comments for public methods
   * Estimated: 90 min
-  * Real: - 79 min
+  * Real: 79 min
 4. remove IEntity infterface
   * Estimated: 15 min
   * Real: 14 min
@@ -25,7 +25,7 @@
   * Real: 110 min
 7. Read about .net identity
   * Estimated: 4 h
-  * Real: 190 /
+  * Real: 234 min
 
 8. add roles 
   * Estimated: 40 min
@@ -70,4 +70,4 @@
 
 Total 
   * Estimated: 19 h [with buffer 22 h]
-  * Real: -
+  * Real: - 22,6 h
