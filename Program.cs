@@ -17,8 +17,6 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
     x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
@@ -34,11 +32,14 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddIdentity<User,IdentityRole>(options =>
     {
         // Configure password requirements
-        options.Password.RequireDigit = false; // Turn off digit requirement
-        options.Password.RequiredLength = 4; // Set minimum password length
-        options.Password.RequireNonAlphanumeric = false; // Turn off non-alphanumeric character requirement
-        options.Password.RequireUppercase = false; // Turn off uppercase letter requirement
-        options.Password.RequireLowercase = false; // Turn off lowercase letter requirement
+        if (builder.Environment.IsDevelopment())
+        {
+            options.Password.RequireDigit = false; // Turn off digit requirement
+            options.Password.RequiredLength = 4; // Set minimum password length
+            options.Password.RequireNonAlphanumeric = false; // Turn off non-alphanumeric character requirement
+            options.Password.RequireUppercase = false; // Turn off uppercase letter requirement
+            options.Password.RequireLowercase = false; // Turn off lowercase letter requirement
+        }
     })
     .AddEntityFrameworkStores<SellerContext>()
     .AddDefaultTokenProviders();
@@ -62,7 +63,7 @@ builder.Services.AddSwaggerGen(c => {
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer \"",
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer [Your token here]\"",
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement {
         {

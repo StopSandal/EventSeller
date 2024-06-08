@@ -25,7 +25,7 @@
   * Real: 110 min
 7. Read about .net identity
   * Estimated: 4 h
-  * Real: 160 /
+  * Real: 190 /
 
 8. add roles 
   * Estimated: 40 min
@@ -48,7 +48,7 @@
 
 14. Add test data
   * Estimated: 20 min
-  * Real: -
+  * Real: - / 16:55
 15. Test app
   * Estimated: 1 h
   * Real: -
@@ -62,6 +62,11 @@
 18. Add migration to insert roles and add First Super User Admin
   * Estimated: 15 min
   * Real: 10 min
+19. Fix validation token serivice
+	  * Real: 1 h
+20. Refactor code and write comments
+  * Estimated: 1 h
+  * Real: 1h 13 min
 
 Total 
   * Estimated: 19 h [with buffer 22 h]

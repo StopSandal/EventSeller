@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using EventSeller.Services.Interfaces; // Include the namespace of the IUserService interface.
 using EventSeller.DataLayer.EntitiesViewModel;
 using EventSeller.DataLayer.EntitiesDto.User;
 using EventSeller.Services.Service;
-using Microsoft.AspNetCore.Authorization; // Include the namespace for ViewModels.
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventSeller.Controllers
 {
@@ -18,6 +15,33 @@ namespace EventSeller.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        [HttpGet("GetUser/{userName}")]
+        [Authorize(Policy = "AdminOnly")]
+        public async Task<IActionResult> GetUser(string userName)
+        {
+            var user = await _userService.GetUserByUserName(userName);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            return Ok(user);
+        }
+
+        [HttpGet("GetUserRoles/{userName}")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<string>>> GetUserRoles(string userName)
+        {
+            try
+            {
+                var roles = await _userService.GetUserRoles(userName);
+                return Ok(roles);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
 
         [HttpPost("CreateUser")]
@@ -39,7 +63,6 @@ namespace EventSeller.Controllers
         [AllowAnonymous] 
         public async Task<IActionResult> Login([FromBody] LoginUserVM user) 
         {
-
             try
             {
                var token = await _userService.Login(user);
@@ -50,8 +73,26 @@ namespace EventSeller.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
 
+        [HttpPost("Refresh")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken([FromBody] TokenVM token)
+        {
+            if (token == null)
+            {
+                return BadRequest(new { message = "Invalid client request" });
+            }
 
+            try
+            {
+                var newToken = await _userService.RefreshToken(token);
+                return Ok(newToken);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("Update/{id}")]
@@ -81,67 +122,6 @@ namespace EventSeller.Controllers
             catch (InvalidOperationException ex)
             {
                 return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("GetUser/{userName}")]
-        [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> GetUser(string userName)
-        {
-            var user = await _userService.GetUserByUserName(userName);
-            if (user == null)
-            {
-                return NotFound("User not found");
-            }
-            return Ok(user);
-        }
-
-        [HttpPost("SetRole/{id}/{role}")]
-        [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> SetRole(string id, string role)
-        {
-            try
-            {
-                await _userService.SetRole(id, role);
-                return Ok($"Role '{role}' set for user with ID '{id}'");
-            }
-            catch (InvalidDataException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("RemoveRole/{id}/{role}")]
-        [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> RemoveRole(string id, string role)
-        {
-            try
-            {
-                await _userService.RemoveRole(id, role);
-                return Ok($"Role '{role}' removed for user with ID '{id}'");
-            }
-            catch (InvalidDataException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpPost("Refresh")]
-        [AllowAnonymous]
-        public async Task<IActionResult> RefreshToken([FromBody] TokenVM token)
-        {
-            if (token == null)
-            {
-                return BadRequest(new { message = "Invalid client request" });
-            }
-
-            try
-            {
-                var newToken = await _userService.RefreshToken(token);
-                return Ok(newToken);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(new { message = ex.Message });
             }
         }
     }
