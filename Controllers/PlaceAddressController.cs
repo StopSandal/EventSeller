@@ -1,5 +1,6 @@
 ﻿using DataLayer.Model;
 using DataLayer.Models.PlaceAddress;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Services;
@@ -20,28 +21,31 @@ namespace PlaceAddressSeller.Controllers
             _placeAddressService = placeAddress;
         }
         [HttpGet]
-        public IActionResult Get()
+        [Authorize]
+        public async Task<IActionResult> GetAsync()
         {
-            var list = _placeAddressService.GetPlaceAddresses();
+            var list = await _placeAddressService.GetPlaceAddresses();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
             return Ok(list);
         }
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        [Authorize]
+        public async Task<IActionResult> GetAsync(long id)
         {
-            var list = _placeAddressService.GetByID(id);
+            var list = await _placeAddressService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreatePlaceAddress([FromBody] CreatePlaceAddress NewPlaceAddress)
+        [Authorize(Policy = "VenueManagerOrAdmin")]
+        public async Task<IActionResult> AddPlaceAddressDtoAsync([FromBody] AddPlaceAddressDto NewPlaceAddress)
         {
             try
             {
-                _placeAddressService.Create(NewPlaceAddress);
+                await _placeAddressService.Create(NewPlaceAddress);
             }
             catch (Exception ex)
             {
@@ -51,9 +55,10 @@ namespace PlaceAddressSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdatePlaceAddress(long id, [FromBody] UpdatePlaceAddress updatePlaceAddress)
+        [Authorize(Policy = "VenueManagerOrAdmin")]
+        public async Task<IActionResult> EditPlaceAddressDtoAsync(long id, [FromBody] EditPlaceAddressDto EditPlaceAddressDto)
         {
-            var existingPlaceAddress = _placeAddressService.GetByID(id);
+            var existingPlaceAddress = await _placeAddressService.GetByID(id);
 
             if (existingPlaceAddress == null)
             {
@@ -61,7 +66,7 @@ namespace PlaceAddressSeller.Controllers
             }
             try
             {
-                _placeAddressService.Update(id,updatePlaceAddress);
+                await _placeAddressService.Update(id,EditPlaceAddressDto);
             }
             catch (Exception ex)
             {
@@ -72,14 +77,15 @@ namespace PlaceAddressSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeletePlaceAddress(long id)
+        [Authorize(Policy = "VenueManagerOrAdmin")]
+        public async Task<IActionResult> DeletePlaceAddressAsync(long id)
         {
             try
             {
-                var placeAddress = _placeAddressService.GetByID(id);
+                var placeAddress = await _placeAddressService.GetByID(id);
                 if (placeAddress == null)
                     return NotFound();
-                _placeAddressService.Delete(id);
+                await _placeAddressService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

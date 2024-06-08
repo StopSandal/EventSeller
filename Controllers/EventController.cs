@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models.Event;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Services.Service;
@@ -19,28 +20,31 @@ namespace EventSeller.Controllers
             _eventService = eventService;
         }
         [HttpGet]
-        public IActionResult Get()
+        [Authorize]
+        public async Task<IActionResult> GetAsync()
         {
-            var list = _eventService.GetEvents();
+            var list = await _eventService.GetEvents();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
             return Ok(list);
         }
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        [Authorize]
+        public async Task<IActionResult> GetAsync(long id)
         {
-            var list = _eventService.GetByID(id);
+            var list = await _eventService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreateEvent([FromBody] CreateEvent NewEvent)
+        [Authorize(Policy = "EventManagerOrAdmin")]
+        public async Task<IActionResult> AddEventDtoAsync([FromBody] AddEventDto NewEvent)
         {
             try
             {
-                _eventService.Create(NewEvent);
+                await _eventService.Create(NewEvent);
             }
             catch(Exception ex)
             {
@@ -50,9 +54,10 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateEvent(long id,[FromBody] UpdateEvent updateEvent) 
+        [Authorize(Policy = "EventManagerOrAdmin")]
+        public async Task<IActionResult> EditEventDtoAsync(long id,[FromBody] EditEventDto EditEventDto) 
         {
-            var existingEvent = _eventService.GetByID(id);
+            var existingEvent = await _eventService.GetByID(id);
 
             if (existingEvent == null)
             {
@@ -60,7 +65,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                _eventService.Update(id, updateEvent);
+                await _eventService.Update(id, EditEventDto);
             }
             catch(Exception ex) 
             {
@@ -71,14 +76,15 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteEvent(long id) 
+        [Authorize(Policy = "EventManagerOrAdmin")]
+        public async Task<IActionResult> DeleteEventAsync(long id) 
         {
             try
             {
-                var existingEvent = _eventService.GetByID(id);
+                var existingEvent = await _eventService.GetByID(id);
                 if (existingEvent == null)
                     return NotFound();
-                _eventService.Delete(id);
+                await _eventService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

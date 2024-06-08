@@ -5,7 +5,7 @@ using DataLayer.Model;
 using Microsoft.IdentityModel.Tokens;
 using Services.Service;
 using DataLayer.Models.HallSector;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace hallSectorSeller.Controllers
 {
@@ -23,28 +23,31 @@ namespace hallSectorSeller.Controllers
             _hallSectorService = hallSectorService;
         }
         [HttpGet]
-        public IActionResult Get()
+        [Authorize]
+        public async Task<IActionResult> GetAsync()
         {
-            var list = _hallSectorService.GetHallSectors();
+            var list = await _hallSectorService.GetHallSectors();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
             return Ok(list);
         }
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        [Authorize]
+        public async Task<IActionResult> GetAsync(long id)
         {
-            var list = _hallSectorService.GetByID(id);
+            var list = await _hallSectorService.GetByID(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
         }
         [HttpPost]
-        public IActionResult CreateHallSector([FromBody] CreateHallSector NewHallSector)
+        [Authorize(Policy = "VenueManagerOrAdmin")]
+        public async Task<IActionResult> AddHallSectorDtoAsync([FromBody] AddHallSectorDto NewHallSector)
         {
             try
             {
-                _hallSectorService.Create(NewHallSector);
+                await _hallSectorService.Create(NewHallSector);
             }
             catch (InvalidOperationException ex)
             {
@@ -59,9 +62,10 @@ namespace hallSectorSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateHallSector(long id, [FromBody] UpdateHallSector updateHallSector)
+        [Authorize(Policy = "VenueManagerOrAdmin")]
+        public async Task<IActionResult> EditHallSectorDtoAsync(long id, [FromBody] EditHallSectorDto EditHallSectorDto)
         {
-            var existingHallSector = _hallSectorService.GetByID(id);
+            var existingHallSector = await _hallSectorService.GetByID(id);
 
             if (existingHallSector == null)
             {
@@ -69,7 +73,7 @@ namespace hallSectorSeller.Controllers
             }
             try
             {
-                _hallSectorService.Update(id,updateHallSector);
+                await _hallSectorService.Update(id,EditHallSectorDto);
             }
             catch (InvalidOperationException ex)
             {
@@ -85,14 +89,15 @@ namespace hallSectorSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteHallSector(long id)
+        [Authorize(Policy = "VenueManagerOrAdmin")]
+        public async Task<IActionResult> DeleteHallSectorAsync(long id)
         {
             try
             {
-                var hallSector = _hallSectorService.GetByID(id);
+                var hallSector = await _hallSectorService.GetByID(id);
                 if (hallSector == null)
                     return NotFound();
-                _hallSectorService.Delete(id);
+                await _hallSectorService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)

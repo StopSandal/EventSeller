@@ -5,58 +5,69 @@
   * Estimated: 20 min
   * Real: 9 min
 1. Make asynchronous Controllers, Services, add async version for Repository methods
-  * Estimated: 30 min
-  * Real: -
+  * Estimated: 30 min 
+  * Real: 25 min
 2. Read about Model naming, and rename them
   * Estimated: 70 min
-  * Real: -
-3. add summury comments for public methods
+  * Real: 83 min
+3. add summary comments for public methods
   * Estimated: 90 min
-  * Real: -
+  * Real: 79 min
 4. remove IEntity infterface
-  * Estimated: 15 min 16/21
-  * Real: -
+  * Estimated: 15 min
+  * Real: 14 min
 5. Make repository and UOF more abstract
   * Estimated: 40 min
-  * Real: -
+  * Real: 25 min
 
 6. Read about Bearer jwt
   * Estimated: 2 h
-  * Real: -
+  * Real: 110 min
 7. Read about .net identity
   * Estimated: 4 h
-  * Real: -
+  * Real: 234 min
 
 8. add roles 
   * Estimated: 40 min
-  * Real: -
+  * Real: 68 min
 9. add roles check
   * Estimated: 1,5 h
-  * Real: -
+  * Real: 53 min
 10. add actions with roles 
   * Estimated: 1h
-  * Real: -
+  * Real: 80 min
 11. add jtw token
   * Estimated: 45 min
-  * Real: -
+  * Real: 72 min
 12. add jtw refresh api
   * Estimated: 2h
-  * Real: -
+  * Real: 153 min
 13. add autorization check
   * Estimated: 45 min
   * Real: -
 
 14. Add test data
   * Estimated: 20 min
-  * Real: -
+  * Real: 2 h
 15. Test app
   * Estimated: 1 h
-  * Real: -
+  * Real:10 min
 
 ?? Time buffer
   * Estimated: 3 h
   * Real: -
+17. Add User Service
+  * Estimated: 40 min
+  * Real: - 31 min
+18. Add migration to insert roles and add First Super User Admin
+  * Estimated: 15 min
+  * Real: 10 min
+19. Fix validation token serivice
+	  * Real: 1 h
+20. Refactor code and write comments
+  * Estimated: 1 h
+  * Real: 1h 13 min
 
 Total 
   * Estimated: 19 h [with buffer 22 h]
-  * Real: -
+  * Real: - 22,6 h
