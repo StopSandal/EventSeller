@@ -48,10 +48,10 @@
 
 14. Add test data
   * Estimated: 20 min
-  * Real: - / 16:55
+  * Real: 2 h
 15. Test app
   * Estimated: 1 h
-  * Real: -
+  * Real:10 min
 
 ?? Time buffer
   * Estimated: 3 h

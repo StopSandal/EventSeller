@@ -29,21 +29,6 @@ namespace EventSeller.Controllers
             return Ok(user);
         }
 
-        [HttpGet("GetUserRoles/{userName}")]
-        [Authorize]
-        public async Task<ActionResult<IEnumerable<string>>> GetUserRoles(string userName)
-        {
-            try
-            {
-                var roles = await _userService.GetUserRoles(userName);
-                return Ok(roles);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-        }
-
         [HttpPost("CreateUser")]
         [AllowAnonymous]
         public async Task<IActionResult> CreateUser([FromBody] AddUserDto addUserDto)

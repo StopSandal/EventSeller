@@ -22,6 +22,20 @@ namespace EventSeller.Controllers
             var roles = await _userRolesService.GetAllRoles();
             return Ok(roles);
         }
+        [HttpGet("GetUserRoles/{userName}")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<string>>> GetUserRolesByUserName(string userName)
+        {
+            try
+            {
+                var roles = await _userRolesService.GetUserRolesByUserName(userName);
+                return Ok(roles);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
 
         [HttpPost("SetRole/{id}/{role}")]
         [Authorize(Policy = "AdminOnly")]
