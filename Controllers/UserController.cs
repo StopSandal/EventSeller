@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using EventSeller.DataLayer.EntitiesViewModel;
 using EventSeller.DataLayer.EntitiesDto.User;
-using EventSeller.Services.Service;
 using Microsoft.AspNetCore.Authorization;
+using EventSeller.Services.Interfaces.Services;
 
 namespace EventSeller.Controllers
 {

@@ -1,10 +1,8 @@
-﻿using DataLayer.Model;
-using DataLayer.Models.PlaceAddress;
+﻿using DataLayer.Models.PlaceAddress;
+using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Services;
-using Services.Service;
 
 namespace PlaceAddressSeller.Controllers
 {

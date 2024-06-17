@@ -1,5 +1,6 @@
 ﻿using EventSeller.Services.Helpers;
 using EventSeller.Services.Interfaces;
+using EventSeller.Services.Interfaces.Services;
 using EventSeller.Services.Service;
 using Services;
 using Services.Service;

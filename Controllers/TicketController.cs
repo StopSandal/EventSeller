@@ -6,6 +6,7 @@ using DataLayer.Model;
 using Services.Service;
 using DataLayer.Models.Ticket;
 using Microsoft.AspNetCore.Authorization;
+using EventSeller.Services.Interfaces.Services;
 
 namespace EventSeller.Controllers
 {

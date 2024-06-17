@@ -1,4 +1,4 @@
-﻿using EventSeller.Services.Service;
+﻿using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

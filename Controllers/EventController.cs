@@ -1,9 +1,9 @@
 ﻿using DataLayer.Models.Event;
+using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Services.Service;
-using System.Collections.Generic;
+
 
 namespace EventSeller.Controllers
 {

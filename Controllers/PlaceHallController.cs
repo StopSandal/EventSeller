@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Services.Service;
 using DataLayer.Models.PlaceHall;
 using Microsoft.AspNetCore.Authorization;
+using EventSeller.Services.Interfaces.Services;
 
 namespace EventSeller.Controllers
 {
