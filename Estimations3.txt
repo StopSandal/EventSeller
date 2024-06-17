@@ -6,10 +6,10 @@
   * Real: 15  min
 0,2. make repaetable values contants
   * Estimated: 40 min 
-  * Real:  min
+  * Real: 16 min 
 0,3. optimize user search
   * Estimated: 30 min 
-  * Real:  min
+  * Real: 10 min
 0,4. answer questions
   * Estimated: 1 h
   * Real:  min

@@ -1,19 +1,15 @@
-using DataLayer.Model;
 using DataLayer.Model.EF;
 using EventSeller.DataLayer.Entities;
 using EventSeller.Helpers;
-using EventSeller.Services.Interfaces;
-using EventSeller.Services.Service;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Services;
-using Services.Service;
-using System.Drawing.Text;
-using System.Text;
 using System.Text.Json.Serialization;
+
+const string JWT_SECRET = "JWT:Secret";
+const string CONNECTION_STRING = "SellerContextConnection";
+const string MIGRATION_ASSEMBLY = "EventSeller.DataLayer";
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +19,8 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 });
 
 builder.Services.AddDbContext<SellerContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SellerContextConnection")
-    ,x => x.MigrationsAssembly("EventSeller.DataLayer")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(CONNECTION_STRING)
+    ,x => x.MigrationsAssembly(MIGRATION_ASSEMBLY)));
 
 builder.Services.RegisterServices();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -51,7 +47,7 @@ builder.Services.AddAuthorization( options =>
 builder.Services.AddAuthentication(options => 
     options.SetDefaultAuthenticationOptions()
     ).AddJwtBearer(options => 
-        options.SetDefaultJwtBearerOptions(builder.Configuration["JWT:Secret"])
+        options.SetDefaultJwtBearerOptions(builder.Configuration[JWT_SECRET])
     );
 
 builder.Services.AddEndpointsApiExplorer();
