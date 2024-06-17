@@ -19,9 +19,9 @@ namespace EventSeller.Controllers
 
         [HttpGet("GetUser/{userName}")]
         [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> GetUser(string userName)
+        public async Task<IActionResult> GetUserAsync(string userName)
         {
-            var user = await _userService.GetUserByUserName(userName);
+            var user = await _userService.GetUserByUserNameAsync(userName);
             if (user == null)
             {
                 return NotFound("User not found");
@@ -31,11 +31,11 @@ namespace EventSeller.Controllers
 
         [HttpPost("CreateUser")]
         [AllowAnonymous]
-        public async Task<IActionResult> CreateUser([FromBody] AddUserDto addUserDto)
+        public async Task<IActionResult> CreateUserAsync([FromBody] AddUserDto addUserDto)
         {
             try
             {
-                await _userService.CreateUser(addUserDto);
+                await _userService.CreateUserAsync(addUserDto);
                 return Ok("User created successfully");
             }
             catch (InvalidOperationException ex)
@@ -46,11 +46,11 @@ namespace EventSeller.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous] 
-        public async Task<IActionResult> Login([FromBody] LoginUserVM user) 
+        public async Task<IActionResult> LoginAsync([FromBody] LoginUserVM user) 
         {
             try
             {
-               var token = await _userService.Login(user);
+               var token = await _userService.LoginAsync(user);
 
                return Ok(token);
             }
@@ -62,7 +62,7 @@ namespace EventSeller.Controllers
 
         [HttpPost("Refresh")]
         [AllowAnonymous]
-        public async Task<IActionResult> RefreshToken([FromBody] TokenVM token)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] TokenVM token)
         {
             if (token == null)
             {
@@ -71,7 +71,7 @@ namespace EventSeller.Controllers
 
             try
             {
-                var newToken = await _userService.RefreshToken(token);
+                var newToken = await _userService.RefreshTokenAsync(token);
                 return Ok(newToken);
             }
             catch (InvalidOperationException ex)
@@ -82,11 +82,11 @@ namespace EventSeller.Controllers
 
         [HttpPut("Update/{id}")]
         [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> Update(string id, [FromBody] EditUserDto model)
+        public async Task<IActionResult> UpdateAsync(string id, [FromBody] EditUserDto model)
         {
             try
             {
-                await _userService.Update(id, model);
+                await _userService.UpdateAsync(id, model);
                 return Ok("User updated successfully");
             }
             catch (NullReferenceException ex)
@@ -97,11 +97,11 @@ namespace EventSeller.Controllers
 
         [HttpDelete("Delete/{id}")]
         [Authorize(Policy = "AdminOnly")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
             try
             {
-                await _userService.Delete(id);
+                await _userService.DeleteAsync(id);
                 return Ok("User deleted successfully");
             }
             catch (InvalidOperationException ex)

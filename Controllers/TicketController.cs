@@ -26,7 +26,7 @@ namespace EventSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync()
         {
-            var list = await _ticketService.GetTickets();
+            var list = await _ticketService.GetTicketsAsync();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -37,7 +37,7 @@ namespace EventSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
-            var list = await _ticketService.GetByID(id);
+            var list = await _ticketService.GetByIDAsync(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
@@ -48,7 +48,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                await _ticketService.Create(NewTicket);
+                await _ticketService.CreateAsync(NewTicket);
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace EventSeller.Controllers
         [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> EditTicketDtoAsync(long id, [FromBody] EditTicketDto EditTicketDto)
         {
-            var existingTicket = await _ticketService.GetByID(id);
+            var existingTicket = await _ticketService.GetByIDAsync(id);
 
             if (existingTicket == null)
             {
@@ -69,7 +69,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                await _ticketService.Update(id,EditTicketDto);
+                await _ticketService.UpdateAsync(id,EditTicketDto);
             }
             catch (Exception ex)
             {
@@ -85,10 +85,10 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var ticket = await _ticketService.GetByID(id);
+                var ticket = await _ticketService.GetByIDAsync(id);
                 if (ticket == null)
                     return NotFound();
-                await _ticketService.Delete(id);
+                await _ticketService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception ex)

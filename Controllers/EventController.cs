@@ -23,7 +23,7 @@ namespace EventSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync()
         {
-            var list = await _eventService.GetEvents();
+            var list = await _eventService.GetEventsAsync();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -33,7 +33,7 @@ namespace EventSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
-            var list = await _eventService.GetByID(id);
+            var list = await _eventService.GetByIDAsync(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
@@ -44,7 +44,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                await _eventService.Create(NewEvent);
+                await _eventService.CreateAsync(NewEvent);
             }
             catch(Exception ex)
             {
@@ -57,7 +57,7 @@ namespace EventSeller.Controllers
         [Authorize(Policy = "EventManagerOrAdmin")]
         public async Task<IActionResult> EditEventDtoAsync(long id,[FromBody] EditEventDto EditEventDto) 
         {
-            var existingEvent = await _eventService.GetByID(id);
+            var existingEvent = await _eventService.GetByIDAsync(id);
 
             if (existingEvent == null)
             {
@@ -65,7 +65,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                await _eventService.Update(id, EditEventDto);
+                await _eventService.UpdateAsync(id, EditEventDto);
             }
             catch(Exception ex) 
             {
@@ -81,10 +81,10 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var existingEvent = await _eventService.GetByID(id);
+                var existingEvent = await _eventService.GetByIDAsync(id);
                 if (existingEvent == null)
                     return NotFound();
-                await _eventService.Delete(id);
+                await _eventService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception ex)

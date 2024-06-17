@@ -22,7 +22,7 @@ namespace PlaceAddressSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync()
         {
-            var list = await _placeAddressService.GetPlaceAddresses();
+            var list = await _placeAddressService.GetPlaceAddressesAsync();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -32,7 +32,7 @@ namespace PlaceAddressSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
-            var list = await _placeAddressService.GetByID(id);
+            var list = await _placeAddressService.GetByIDAsync(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
@@ -43,7 +43,7 @@ namespace PlaceAddressSeller.Controllers
         {
             try
             {
-                await _placeAddressService.Create(NewPlaceAddress);
+                await _placeAddressService.CreateAsync(NewPlaceAddress);
             }
             catch (Exception ex)
             {
@@ -56,7 +56,7 @@ namespace PlaceAddressSeller.Controllers
         [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> EditPlaceAddressDtoAsync(long id, [FromBody] EditPlaceAddressDto EditPlaceAddressDto)
         {
-            var existingPlaceAddress = await _placeAddressService.GetByID(id);
+            var existingPlaceAddress = await _placeAddressService.GetByIDAsync(id);
 
             if (existingPlaceAddress == null)
             {
@@ -64,7 +64,7 @@ namespace PlaceAddressSeller.Controllers
             }
             try
             {
-                await _placeAddressService.Update(id,EditPlaceAddressDto);
+                await _placeAddressService.UpdateAsync(id,EditPlaceAddressDto);
             }
             catch (Exception ex)
             {
@@ -80,10 +80,10 @@ namespace PlaceAddressSeller.Controllers
         {
             try
             {
-                var placeAddress = await _placeAddressService.GetByID(id);
+                var placeAddress = await _placeAddressService.GetByIDAsync(id);
                 if (placeAddress == null)
                     return NotFound();
-                await _placeAddressService.Delete(id);
+                await _placeAddressService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception ex)

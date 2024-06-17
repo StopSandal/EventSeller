@@ -26,7 +26,7 @@ namespace EventSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync()
         {
-            var list = await _placeHallService.GetPlaceHalls();
+            var list = await _placeHallService.GetPlaceHallsAsync();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -36,7 +36,7 @@ namespace EventSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
-            var list = await _placeHallService.GetByID(id);
+            var list = await _placeHallService.GetByIDAsync(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
@@ -47,7 +47,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                await _placeHallService.Create(NewPlaceHall);
+                await _placeHallService.CreateAsync(NewPlaceHall);
             }
             catch (InvalidOperationException ex)
             {
@@ -66,7 +66,7 @@ namespace EventSeller.Controllers
         public async Task<IActionResult> EditPlaceHallDtoAsync(long id, [FromBody] EditPlaceHallDto EditPlaceHallDto)
         {
 
-            var existingPlaceHall = await _placeHallService.GetByID(id);
+            var existingPlaceHall = await _placeHallService.GetByIDAsync(id);
 
             if (existingPlaceHall == null)
             {
@@ -74,7 +74,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                await _placeHallService.Update(id, EditPlaceHallDto);
+                await _placeHallService.UpdateAsync(id, EditPlaceHallDto);
 
             }
             catch (InvalidOperationException ex)
@@ -96,10 +96,10 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var placeHall = await _placeHallService.GetByID(id);
+                var placeHall = await _placeHallService.GetByIDAsync(id);
                 if (placeHall == null)
                     return NotFound();
-                await _placeHallService.Delete(id);
+                await _placeHallService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception ex)

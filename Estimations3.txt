@@ -1,9 +1,9 @@
 ﻿0. separate interfaces
   * Estimated: 30 min 
-  * Real:  min 14:01
+  * Real: 13 min
 0,1. rename async methods
   * Estimated: 50 min 
-  * Real:  min
+  * Real: 15  min
 0,2. make repaetable values contants
   * Estimated: 40 min 
   * Real:  min

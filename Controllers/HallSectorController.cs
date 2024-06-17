@@ -27,7 +27,7 @@ namespace hallSectorSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync()
         {
-            var list = await _hallSectorService.GetHallSectors();
+            var list = await _hallSectorService.GetHallSectorsAsync();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -37,7 +37,7 @@ namespace hallSectorSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
-            var list = await _hallSectorService.GetByID(id);
+            var list = await _hallSectorService.GetByIDAsync(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
@@ -48,7 +48,7 @@ namespace hallSectorSeller.Controllers
         {
             try
             {
-                await _hallSectorService.Create(NewHallSector);
+                await _hallSectorService.CreateAsync(NewHallSector);
             }
             catch (InvalidOperationException ex)
             {
@@ -66,7 +66,7 @@ namespace hallSectorSeller.Controllers
         [Authorize(Policy = "VenueManagerOrAdmin")]
         public async Task<IActionResult> EditHallSectorDtoAsync(long id, [FromBody] EditHallSectorDto EditHallSectorDto)
         {
-            var existingHallSector = await _hallSectorService.GetByID(id);
+            var existingHallSector = await _hallSectorService.GetByIDAsync(id);
 
             if (existingHallSector == null)
             {
@@ -74,7 +74,7 @@ namespace hallSectorSeller.Controllers
             }
             try
             {
-                await _hallSectorService.Update(id,EditHallSectorDto);
+                await _hallSectorService.UpdateAsync(id,EditHallSectorDto);
             }
             catch (InvalidOperationException ex)
             {
@@ -95,10 +95,10 @@ namespace hallSectorSeller.Controllers
         {
             try
             {
-                var hallSector = await _hallSectorService.GetByID(id);
+                var hallSector = await _hallSectorService.GetByIDAsync(id);
                 if (hallSector == null)
                     return NotFound();
-                await _hallSectorService.Delete(id);
+                await _hallSectorService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception ex)
