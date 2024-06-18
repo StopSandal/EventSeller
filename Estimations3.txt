@@ -40,17 +40,17 @@
 
 3. Add Payment system
   3.1 Add payment system models ( card, payment transactions, logs)
-    * Estimated: 2 h
-    * Real:  min
+    * Estimated: 2 h 
+    * Real: 1,5 h
   3.2 Add logging 
     * Estimated: 2 h
     * Real:  min
   3.3 add confirmation code with confiramation accepting
     * Estimated: 4 h
-    * Real:  min
+    * Real: min 
   3.4 add +-Money on card, start , cancel and end payment transaction
-    * Estimated: 4 h
-    * Real:  min
+    * Estimated: 4 h  
+    * Real: 2 h 32 min
   3.5 Add Currency type check on transaction.
     * Estimated: 1 h
     * Real:  min
