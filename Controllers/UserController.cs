@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using EventSeller.DataLayer.EntitiesViewModel;
 using EventSeller.DataLayer.EntitiesDto.User;
 using Microsoft.AspNetCore.Authorization;
 using EventSeller.Services.Interfaces.Services;
+using EventSeller.DataLayer.EntitiesDto;
 
 namespace EventSeller.Controllers
 {
@@ -46,7 +46,7 @@ namespace EventSeller.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous] 
-        public async Task<IActionResult> LoginAsync([FromBody] LoginUserVM user) 
+        public async Task<IActionResult> LoginAsync([FromBody] LoginUserDTO user) 
         {
             try
             {
@@ -62,7 +62,7 @@ namespace EventSeller.Controllers
 
         [HttpPost("Refresh")]
         [AllowAnonymous]
-        public async Task<IActionResult> RefreshTokenAsync([FromBody] TokenVM token)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] TokenDTO token)
         {
             if (token == null)
             {

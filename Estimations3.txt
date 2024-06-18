@@ -12,8 +12,78 @@
   * Real: 10 min
 0,4. answer questions
   * Estimated: 1 h
-  * Real:  min
+  * Real: 17 min
+0,5. Rename LoginVM to DTO
+  * Estimated: 5 min
+  * Real: 2 min
+
+1. Make Estimation
+  * Estimated: 1,5 h 
+  * Real:  2h 31 min
+
+2. Add Admin Analytics 
+  2.1 add ticket Saled and On-Sale statistics for various filters
+    * Estimated: 5 h
+    * Real:  min
+  2.2 add event popularity statistics and selling scale for time and event filter
+    * Estimated: 3 h
+    * Real:  min
+  2.3  add per-day tickets selling statictic and event trafficability with Place filter and time filter
+    * Estimated: 5 h
+    * Real:  min
+  2.4  add ticketSeats and HallSector statistics for saless with event filter
+    * Estimated: 5 h
+    * Real:  min
+  2.5  add all analytics export to csv and excel
+    * Estimated: 7 h
+    * Real:  min
+
+3. Add Payment system
+  3.1 Add payment system models ( card, payment transactions, logs)
+    * Estimated: 2 h
+    * Real:  min
+  3.2 Add logging 
+    * Estimated: 2 h
+    * Real:  min
+  3.3 add confirmation code with confiramation accepting
+    * Estimated: 4 h
+    * Real:  min
+  3.4 add +-Money on card, start , cancel and end payment transaction
+    * Estimated: 4 h
+    * Real:  min
+  3.5 Add Currency type check on transaction.
+    * Estimated: 1 h
+    * Real:  min
+  3.6.0 Read about Unit tests
+    * Estimated: 6 h
+    * Real:  min
+  3.6 Add Unit Tests
+    * Estimated: 4 h
+    * Real:  min
+  3.7 Read about Integration Tests
+    * Estimated: 5 h
+    * Real:  min
+  3.7 Add Integration Tests
+    * Estimated: 3 h
+    * Real:  min
+
+
+4. Add Seller Features
+  4.1  Make possible to registrate many tickects for Event ( to fill PlaceHall with options)
+    * Estimated: 6 h
+    * Real:  min
+  4.2 Make possible to create tickets directly on PlaceHall
+    * Estimated: 1,5 h
+    * Real:  min
+  4.3 Добавить возможность проведения одного события в разных местах (например один и тот же фильм может показываться в разных кинотеатрах в одно и тоже или разное время) ???
+  4.4 Add Temporal ticket booking on 10 minutes to get payment
+    * Estimated: 3 h
+    * Real:  min
+  4.5 Add Ticket booking with canselation and payment commission
+    * Estimated: 6 h
+    * Real:  min
+
 
 Total 
-  * Estimated:  h [with buffer  h]
+  * Estimated: 72,5 h [with buffer  84 h]
   * Real: -  h
