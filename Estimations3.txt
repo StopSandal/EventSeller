@@ -44,16 +44,16 @@
     * Real: 1,5 h
   3.2 Add logging 
     * Estimated: 2 h
-    * Real:  min
+    * Real: 1h 26 min 
   3.3 add confirmation code with confiramation accepting
     * Estimated: 4 h
-    * Real: min 
+    * Real: 1 h 9 min
   3.4 add +-Money on card, start , cancel and end payment transaction
     * Estimated: 4 h  
     * Real: 2 h 32 min
   3.5 Add Currency type check on transaction.
     * Estimated: 1 h
-    * Real:  min
+    * Real: 10 min
   3.6.0 Read about Unit tests
     * Estimated: 6 h
     * Real:  min
