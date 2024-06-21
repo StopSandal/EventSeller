@@ -56,10 +56,10 @@
     * Real: 10 min
   3.6.0 Read about Unit tests
     * Estimated: 6 h
-    * Real:  min
+    * Real:  5 h
   3.6 Add Unit Tests
     * Estimated: 4 h
-    * Real:  min
+    * Real:  min 14:00
   3.7 Read about Integration Tests
     * Estimated: 5 h
     * Real:  min
