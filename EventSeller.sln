@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentSystem.DataLayer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentSystem.Services", "..\PaymentSystem\PaymentSystem.Services\PaymentSystem.Services.csproj", "{06AEE56C-DD29-42A7-AB2D-535D94C07C20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentSystem.UnitTest", "..\PaymentSystem\PaymentSystem.UnitTest\PaymentSystem.UnitTest.csproj", "{2D701936-18F6-4228-99CD-C6816ACEC1C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentSystem.UnitTest", "..\PaymentSystem\PaymentSystem.UnitTest\PaymentSystem.UnitTest.csproj", "{2D701936-18F6-4228-99CD-C6816ACEC1C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentSystem.IntegrationTests", "..\PaymentSystem\PaymentSystem.IntegrationTests\PaymentSystem.IntegrationTests.csproj", "{9C0AB533-094A-42B2-860D-D8E35AD0A31C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{2D701936-18F6-4228-99CD-C6816ACEC1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D701936-18F6-4228-99CD-C6816ACEC1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D701936-18F6-4228-99CD-C6816ACEC1C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C0AB533-094A-42B2-860D-D8E35AD0A31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C0AB533-094A-42B2-860D-D8E35AD0A31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C0AB533-094A-42B2-860D-D8E35AD0A31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C0AB533-094A-42B2-860D-D8E35AD0A31C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
