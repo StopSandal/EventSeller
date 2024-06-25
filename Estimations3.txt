@@ -74,7 +74,7 @@
     * Real:  min
   4.2 Make possible to create tickets directly on PlaceHall
     * Estimated: 1,5 h
-    * Real:  min
+    * Real: 1 h 38 min
   4.3 Добавить возможность проведения одного события в разных местах (например один и тот же фильм может показываться в разных кинотеатрах в одно и тоже или разное время) ???
   4.4 Add Temporal ticket booking on 10 minutes to get payment
     * Estimated: 3 h
