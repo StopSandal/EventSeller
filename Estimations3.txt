@@ -78,10 +78,20 @@
   4.3 Добавить возможность проведения одного события в разных местах (например один и тот же фильм может показываться в разных кинотеатрах в одно и тоже или разное время) ???
   4.4 Add Temporal ticket booking on 10 minutes to get payment
     * Estimated: 3 h
-    * Real:  min
+    * Real:  min 
   4.5 Add Ticket booking with canselation and payment commission
     * Estimated: 6 h
-    * Real:  min
+    * Real: 2 h 14:20
+
+    Билет -> id -> return  Amount / to see
+    Билет -> id -> Get Process Payment -> get answer
+                -> Set booking
+    Tranc id + confirm -> Payment confirm
+                                         -> Set sold + infinity booking
+    Tranc id -> cancel after 3 min
+            -> no booking
+    return money ??                        ->trancId
+                 -> table ticketTransaction
 
 
 Total 
