@@ -86,7 +86,7 @@
 Time buffer
  ?.1 Add money return service
      * Estimated: 2 h
-    * Real: 46 min 13:33
+    * Real: 1 h 34 min
 
 
 Total 
