@@ -83,15 +83,10 @@
     * Estimated: 6 h
     * Real: 5h 14 min
 
-    Билет -> id -> return  Amount / to see
-    Билет -> id -> Get Process Payment -> get answer
-                -> Set booking
-    Tranc id + confirm -> Payment confirm
-                                         -> Set sold + infinity booking
-    Tranc id -> cancel after 3 min
-            -> no booking
-    return money ??                        ->trancId
-                 -> table ticketTransaction
+Time buffer
+ ?.1 Add money return service
+     * Estimated: 2 h
+    * Real: 46 min 13:33
 
 
 Total 
