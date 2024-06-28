@@ -16,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
     x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    x.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
 });
 
 builder.Services.AddDbContext<SellerContext>(options =>

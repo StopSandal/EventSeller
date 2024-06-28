@@ -32,11 +32,11 @@ namespace EventSeller.Controllers
         }
         [Authorize]
         [HttpPost("confirm")]
-        public async Task<IActionResult> ConfirmTicketPaymentAsync([FromQuery] string userName, [FromBody] PaymentConfirmationDTO paymentConfirmationDTO)
+        public async Task<IActionResult> ConfirmTicketPaymentAsync([FromBody] PaymentConfirmationDTO paymentConfirmationDTO)
         {
             try
             {
-                await _ticketSellerService.ConfirmTicketPaymentAsync(userName, paymentConfirmationDTO);
+                await _ticketSellerService.ConfirmTicketPaymentAsync(User.Identity.Name, paymentConfirmationDTO);
                 return Ok("Ticket payment confirmed successfully");
             }
             catch (Exception ex)

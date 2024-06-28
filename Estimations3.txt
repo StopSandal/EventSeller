@@ -78,16 +78,21 @@
   4.3 Добавить возможность проведения одного события в разных местах (например один и тот же фильм может показываться в разных кинотеатрах в одно и тоже или разное время) ???
   4.4 Add Temporal ticket booking on 10 minutes to get payment
     * Estimated: 3 h
-    * Real: 1 h 12:10
+    * Real: 3 h 
   4.5 Add Ticket booking with canselation and payment commission
     * Estimated: 6 h
-    * Real: 5h 14 min
+    * Real: 5h 44 min
 
 Time buffer
  ?.1 Add money return service
      * Estimated: 2 h
     * Real: 1 h 34 min
-
+?.2 Fix and test exchange with payment api
+     * Estimated: 2 h
+    * Real: 2 h 24 min
+    cansel
+    confirm
+    all external 
 
 Total 
   * Estimated: 72,5 h [with buffer  84 h]
