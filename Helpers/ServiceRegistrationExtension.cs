@@ -1,4 +1,5 @@
-﻿using EventSeller.Services.Helpers;
+﻿using EventSeller.DataLayer.Entities;
+using EventSeller.Services.Helpers;
 using EventSeller.Services.Interfaces;
 using EventSeller.Services.Interfaces.Services;
 using EventSeller.Services.Service;
@@ -27,6 +28,12 @@ namespace EventSeller.Helpers
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRolesService, UserRolesService>();
+            services.AddScoped<IExternalPaymentService, ExternalPaymentService>();
+            services.AddScoped<ITicketSellerService, TicketSellerService>();
+            services.AddScoped<IBookingService, BookingService>();
+
+            services.AddHttpClient<ExternalPaymentService>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IJWTFactory, JWTFactory>();
 

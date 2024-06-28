@@ -23,6 +23,7 @@ builder.Services.AddDbContext<SellerContext>(options =>
     ,x => x.MigrationsAssembly(MIGRATION_ASSEMBLY)));
 
 builder.Services.RegisterServices();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddIdentity<User,IdentityRole>(options =>
