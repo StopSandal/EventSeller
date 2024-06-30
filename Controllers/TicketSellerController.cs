@@ -36,8 +36,8 @@ namespace EventSeller.Controllers
         {
             try
             {
-                await _ticketSellerService.ConfirmTicketPaymentAsync(User.Identity.Name, paymentConfirmationDTO);
-                return Ok("Ticket payment confirmed successfully");
+                var transactionInfo = await _ticketSellerService.ConfirmTicketPaymentAsync(User.Identity.Name, paymentConfirmationDTO);
+                return Ok(transactionInfo);
             }
             catch (Exception ex)
             {
