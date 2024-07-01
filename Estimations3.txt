@@ -71,7 +71,7 @@
 4. Add Seller Features
   4.1  Make possible to registrate many tickects for Event ( to fill PlaceHall with options)
     * Estimated: 6 h
-    * Real:  min 1 h 11:41 12:48 13:21
+    * Real:  min 1 h 11:41 12:48/ 13:21 14:49/ 16:37
   4.2 Make possible to create tickets directly on PlaceHall
     * Estimated: 1,5 h
     * Real: 1 h 38 min
