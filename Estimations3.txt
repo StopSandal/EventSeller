@@ -71,7 +71,7 @@
 4. Add Seller Features
   4.1  Make possible to registrate many tickects for Event ( to fill PlaceHall with options)
     * Estimated: 6 h
-    * Real:  min
+    * Real:  min 1 h 11:41
   4.2 Make possible to create tickets directly on PlaceHall
     * Estimated: 1,5 h
     * Real: 1 h 38 min
@@ -90,9 +90,9 @@ Time buffer
 ?.2 Fix and test exchange with payment api
      * Estimated: 2 h
     * Real: 2 h 24 min
-    cansel
-    confirm
-    all external 
+?.3 Add ticket start date checking for sales
+     * Estimated: 1 h
+    * Real: 42 min
 
 Total 
   * Estimated: 72,5 h [with buffer  84 h]
