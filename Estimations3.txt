@@ -24,7 +24,7 @@
 2. Add Admin Analytics 
   2.1 add ticket Saled and On-Sale statistics for various filters
     * Estimated: 5 h
-    * Real:  min 
+    * Real:  2 h 26 min //
   2.2 add event popularity statistics and selling scale for time and event filter
     * Estimated: 3 h
     * Real:  min
