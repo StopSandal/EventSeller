@@ -24,7 +24,7 @@
 2. Add Admin Analytics 
   2.1 add ticket Saled and On-Sale statistics for various filters
     * Estimated: 5 h
-    * Real:  min //14:00
+    * Real:  min 
   2.2 add event popularity statistics and selling scale for time and event filter
     * Estimated: 3 h
     * Real:  min
@@ -83,6 +83,7 @@
     * Estimated: 6 h
     * Real: 5h 44 min
 
+
 Time buffer
  ?.1 Add money return service
      * Estimated: 2 h
@@ -93,6 +94,9 @@ Time buffer
 ?.3 Add ticket start date checking for sales
      * Estimated: 1 h
     * Real: 42 min
+?.4 Add event sessions to composite tickets
+    * Estimated: 4 h
+    * Real: 3,5 h
 
 Total 
   * Estimated: 72,5 h [with buffer  84 h]
