@@ -32,6 +32,7 @@ namespace EventSeller.Helpers
             services.AddScoped<ITicketSellerService, TicketSellerService>();
             services.AddScoped<IEventSessionService, EventSessionService>();
             services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<ITicketSalesStatisticService, TicketSalesStatisticService>();
             services.AddScoped<ITicketRegistrationService, TicketRegistrationService>();
 
             services.AddHttpClient<ExternalPaymentService>();
