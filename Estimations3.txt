@@ -27,7 +27,7 @@
     * Real:  4 h 18 min
   2.2 add event popularity statistics and selling scale for time and event filter
     * Estimated: 3 h
-    * Real:  min
+    * Real:  min // 34 / 19:18 30/ 19:51 21:49/ 22:04
   2.3  add per-day tickets selling statictic and event trafficability with Place filter and time filter
     * Estimated: 5 h
     * Real:  min
