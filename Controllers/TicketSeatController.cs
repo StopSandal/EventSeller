@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataLayer.Model;
 using Microsoft.IdentityModel.Tokens;
 using Services.Service;
-using DataLayer.Models.TicketSeat;
+using EventSeller.DataLayer.EntitiesDto.TicketSeat;
 using Microsoft.AspNetCore.Authorization;
 using EventSeller.Services.Interfaces.Services;
 

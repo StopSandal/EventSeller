@@ -1,4 +1,4 @@
-﻿using DataLayer.Models.Event;
+﻿using EventSeller.DataLayer.EntitiesDto.Event;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

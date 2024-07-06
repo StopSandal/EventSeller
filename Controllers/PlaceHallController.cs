@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataLayer.Model;
 using Microsoft.IdentityModel.Tokens;
 using Services.Service;
-using DataLayer.Models.PlaceHall;
+using EventSeller.DataLayer.EntitiesDto.PlaceHall;
 using Microsoft.AspNetCore.Authorization;
 using EventSeller.Services.Interfaces.Services;
 

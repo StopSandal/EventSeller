@@ -1,10 +1,6 @@
-﻿using Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using DataLayer.Model;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Services.Service;
-using DataLayer.Models.HallSector;
+using EventSeller.DataLayer.EntitiesDto.HallSector;
 using Microsoft.AspNetCore.Authorization;
 using EventSeller.Services.Interfaces.Services;
 

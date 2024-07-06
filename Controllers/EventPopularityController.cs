@@ -31,7 +31,7 @@ namespace EventSeller.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error retrieving events popularity: {ex.Message}");
-                return BadRequest("Error retrieving events popularity");
+                return BadRequest(ex.Message);
             }
         }
         [Authorize(Policy = "AdminOnly")]
@@ -50,7 +50,7 @@ namespace EventSeller.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error retrieving event type statistic: {ex.Message}");
-                return BadRequest("Error retrieving event type statistic");
+                return BadRequest(ex.Message);
             }
         }
         [Authorize(Policy = "AdminOnly")]
@@ -65,7 +65,7 @@ namespace EventSeller.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error retrieving most popular events: {ex.Message}");
-                return BadRequest("Error retrieving most popular events");
+                return BadRequest(ex.Message);
             }
         }
         [Authorize(Policy = "AdminOnly")]
@@ -80,7 +80,7 @@ namespace EventSeller.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error retrieving most popular event types: {ex.Message}");
-                return BadRequest("Error retrieving most popular event types");
+                return BadRequest(ex.Message);
             }
         }
 
@@ -95,7 +95,7 @@ namespace EventSeller.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error retrieving most realizable events: {ex.Message}");
-                return BadRequest("Error retrieving most realizable events");
+                return BadRequest(ex.Message);
             }
         }
         [Authorize(Policy = "AdminOnly")]
@@ -110,7 +110,7 @@ namespace EventSeller.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error retrieving most realizable event types: {ex.Message}");
-                return BadRequest("Error retrieving most realizable event types");
+                return BadRequest(ex.Message);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using DataLayer.Models.PlaceAddress;
+﻿using EventSeller.DataLayer.EntitiesDto.PlaceAddress;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
