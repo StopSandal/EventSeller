@@ -35,7 +35,7 @@ namespace EventSeller.Controllers
             }
         }
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/{eventTypeId}/statistic")]
+        [HttpGet("eventtypes/statistic/{eventTypeId}")]
         public async Task<ActionResult<EventTypePopularityStatisticDTO>> GetEventTypeStatistic(long eventTypeId)
         {
             try
