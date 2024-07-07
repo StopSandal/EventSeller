@@ -1,5 +1,6 @@
 ﻿using EventSeller.DataLayer.EntitiesDto.Statistics;
 using EventSeller.Services.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -19,6 +20,7 @@ namespace EventSeller.Controllers
             _logger = logger;
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("traffic/byDate")]
         public async Task<IActionResult> GetDaysTrafficOrderedByDay([FromQuery] int maxCount = 0)
         {
@@ -37,6 +39,7 @@ namespace EventSeller.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("traffic/byTraffic")]
         public async Task<IActionResult> GetDaysTrafficOrderedByTotalTraffic([FromQuery] int maxCount = 0)
         {
@@ -55,6 +58,7 @@ namespace EventSeller.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("traffic/ForPeriod/ByDay")]
         public async Task<IActionResult> GetDaysTrafficAtPeriodOrderedByDay([FromQuery] DateTime startPeriod, [FromQuery] DateTime endPeriod, [FromQuery] int maxCount = 0)
         {
@@ -73,6 +77,7 @@ namespace EventSeller.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("traffic/ForPeriod/ByTraffic")]
         public async Task<IActionResult> GetDaysTrafficAtPeriodOrderedByTotalTraffic([FromQuery] DateTime startPeriod, [FromQuery] DateTime endPeriod, [FromQuery] int maxCount = 0)
         {
@@ -91,6 +96,7 @@ namespace EventSeller.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("traffic/ForHall/ByDay")]
         public async Task<IActionResult> GetDaysTrafficAtHallOrderedByDay([FromQuery] long placeHallId, [FromQuery] int maxCount = 0)
         {
@@ -109,6 +115,7 @@ namespace EventSeller.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("traffic/ForHall/ByTraffic")]
         public async Task<IActionResult> GetDaysTrafficAtHallOrderedByTotalTraffic([FromQuery] long placeHallId, [FromQuery] int maxCount = 0)
         {
@@ -127,6 +134,7 @@ namespace EventSeller.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("traffic/ForPlace/ByDay")]
         public async Task<IActionResult> GetDaysTrafficAtPlaceOrderedByDay([FromQuery] long placeAddressId, [FromQuery] int maxCount = 0)
         {
@@ -145,6 +153,7 @@ namespace EventSeller.Controllers
             }
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpGet("traffic/ForPlace/ByTraffic")]
         public async Task<IActionResult> GetDaysTrafficAtPlaceOrderedByTotalTraffic([FromQuery] long placeAddressId, [FromQuery] int maxCount = 0)
         {
