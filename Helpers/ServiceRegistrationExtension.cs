@@ -34,6 +34,8 @@ namespace EventSeller.Helpers
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IDayTrafficStatisticService, DayTrafficStatisticService>();
             services.AddScoped<ITicketSalesStatisticService, TicketSalesStatisticService>();
+            services.AddScoped<ISeatsPopularityService, SeatsPopularityService>();
+            services.AddScoped<ISectorsStatisticsService, SectorsStatisticsService>();
             services.AddScoped<IEventPopularityService, EventPopularityService>();
             services.AddScoped<ITicketRegistrationService, TicketRegistrationService>();
 
