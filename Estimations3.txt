@@ -36,7 +36,7 @@
     * Real:  5 h 3 min
   2.5  add all analytics export to csv and excel
     * Estimated: 7 h
-    * Real:  min
+    * Real:  9 h 57 min
 
 3. Add Payment system
   3.1 Add payment system models ( card, payment transactions, logs)

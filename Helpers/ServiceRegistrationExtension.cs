@@ -1,6 +1,7 @@
 ﻿using EventSeller.DataLayer.Entities;
 using EventSeller.Services.Helpers;
 using EventSeller.Services.Interfaces;
+using EventSeller.Services.Interfaces.Exporters;
 using EventSeller.Services.Interfaces.Services;
 using EventSeller.Services.Service;
 using Services;
@@ -37,6 +38,8 @@ namespace EventSeller.Helpers
             services.AddScoped<ISeatsPopularityService, SeatsPopularityService>();
             services.AddScoped<ISectorsStatisticsService, SectorsStatisticsService>();
             services.AddScoped<IEventPopularityService, EventPopularityService>();
+            services.AddScoped<ICsvFileExport, CsvFileExporter>();
+            services.AddScoped<IExcelFileExport, ExcelFileExporter>();
             services.AddScoped<ITicketRegistrationService, TicketRegistrationService>();
 
             services.AddHttpClient<ExternalPaymentService>();
