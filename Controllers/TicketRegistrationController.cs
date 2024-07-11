@@ -2,12 +2,8 @@
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace EventSeller.Api.Controllers
+namespace EventSeller.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

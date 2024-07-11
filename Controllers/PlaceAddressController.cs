@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace PlaceAddressSeller.Controllers
+namespace EventSeller.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -64,7 +64,7 @@ namespace PlaceAddressSeller.Controllers
             }
             try
             {
-                await _placeAddressService.UpdateAsync(id,EditPlaceAddressDto);
+                await _placeAddressService.UpdateAsync(id, EditPlaceAddressDto);
             }
             catch (Exception ex)
             {

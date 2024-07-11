@@ -97,6 +97,9 @@ Time buffer
 ?.4 Add event sessions to composite tickets
     * Estimated: 4 h
     * Real: 3,5 h
+?.5 Refactor code
+    * Estimated: 4 h
+    * Real: 3,5 h
 
 Total 
   * Estimated: 72,5 h [with buffer  84 h]

@@ -1,11 +1,9 @@
-﻿using EventSeller.DataLayer.Entities;
+﻿using EventSeller.Services;
 using EventSeller.Services.Helpers;
 using EventSeller.Services.Interfaces;
 using EventSeller.Services.Interfaces.Exporters;
 using EventSeller.Services.Interfaces.Services;
 using EventSeller.Services.Service;
-using Services;
-using Services.Service;
 
 namespace EventSeller.Helpers
 {

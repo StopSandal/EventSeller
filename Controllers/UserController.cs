@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EventSeller.DataLayer.EntitiesDto;
 using EventSeller.DataLayer.EntitiesDto.User;
-using Microsoft.AspNetCore.Authorization;
 using EventSeller.Services.Interfaces.Services;
-using EventSeller.DataLayer.EntitiesDto;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EventSeller.Controllers
 {
@@ -45,14 +45,14 @@ namespace EventSeller.Controllers
         }
 
         [HttpPost("Login")]
-        [AllowAnonymous] 
-        public async Task<IActionResult> LoginAsync([FromBody] LoginUserDTO user) 
+        [AllowAnonymous]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginUserDTO user)
         {
             try
             {
-               var token = await _userService.LoginAsync(user);
+                var token = await _userService.LoginAsync(user);
 
-               return Ok(token);
+                return Ok(token);
             }
             catch (InvalidDataException ex)
             {

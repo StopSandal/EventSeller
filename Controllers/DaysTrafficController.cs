@@ -3,7 +3,6 @@ using EventSeller.Helpers;
 using EventSeller.Services.Interfaces.Exporters;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
 

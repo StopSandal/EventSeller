@@ -1,4 +1,4 @@
-using DataLayer.Model.EF;
+using EventSeller.DataLayer.EF;
 using EventSeller.DataLayer.Entities;
 using EventSeller.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -21,13 +21,13 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 builder.Services.AddDbContext<SellerContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString(CONNECTION_STRING)
-    ,x => x.MigrationsAssembly(MIGRATION_ASSEMBLY)));
+    , x => x.MigrationsAssembly(MIGRATION_ASSEMBLY)));
 
 builder.Services.RegisterServices();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddIdentity<User,IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
     {
         // Configure password requirements
         if (builder.Environment.IsDevelopment())
@@ -42,18 +42,19 @@ builder.Services.AddIdentity<User,IdentityRole>(options =>
     .AddEntityFrameworkStores<SellerContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthorization( options => 
+builder.Services.AddAuthorization(options =>
     options.AddAuthorizationPolicies()
     );
 
-builder.Services.AddAuthentication(options => 
+builder.Services.AddAuthentication(options =>
     options.SetDefaultAuthenticationOptions()
-    ).AddJwtBearer(options => 
+    ).AddJwtBearer(options =>
         options.SetDefaultJwtBearerOptions(builder.Configuration[JWT_SECRET])
     );
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c =>
+{
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",

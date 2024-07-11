@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using EventSeller.DataLayer.EntitiesDto.HallSector;
-using Microsoft.AspNetCore.Authorization;
+﻿using EventSeller.DataLayer.EntitiesDto.HallSector;
 using EventSeller.Services.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
-namespace hallSectorSeller.Controllers
+namespace EventSeller.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -70,7 +70,7 @@ namespace hallSectorSeller.Controllers
             }
             try
             {
-                await _hallSectorService.UpdateAsync(id,EditHallSectorDto);
+                await _hallSectorService.UpdateAsync(id, EditHallSectorDto);
             }
             catch (InvalidOperationException ex)
             {

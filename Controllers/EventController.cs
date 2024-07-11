@@ -46,7 +46,7 @@ namespace EventSeller.Controllers
             {
                 await _eventService.CreateAsync(NewEvent);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while creating the event.");
@@ -55,7 +55,7 @@ namespace EventSeller.Controllers
         }
         [HttpPut("{id}")]
         [Authorize(Policy = "EventManagerOrAdmin")]
-        public async Task<IActionResult> EditEventDtoAsync(long id,[FromBody] EditEventDto EditEventDto) 
+        public async Task<IActionResult> EditEventDtoAsync(long id, [FromBody] EditEventDto EditEventDto)
         {
             var existingEvent = await _eventService.GetByIDAsync(id);
 
@@ -67,7 +67,7 @@ namespace EventSeller.Controllers
             {
                 await _eventService.UpdateAsync(id, EditEventDto);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while updating the event.");
@@ -77,7 +77,7 @@ namespace EventSeller.Controllers
         }
         [HttpDelete("{id}")]
         [Authorize(Policy = "EventManagerOrAdmin")]
-        public async Task<IActionResult> DeleteEventAsync(long id) 
+        public async Task<IActionResult> DeleteEventAsync(long id)
         {
             try
             {
@@ -93,5 +93,5 @@ namespace EventSeller.Controllers
                 return StatusCode(500, "An error occurred while deleting the event.");
             }
         }
-    }    
+    }
 }

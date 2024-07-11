@@ -172,8 +172,8 @@ namespace EventSeller.Controllers
             {
                 var statistics = await _ticketSalesStatisticService.GetSalesStatisticForEventAsync(eventId);
 
-              var stream = await _excelFileExport.ExportFileAsync(statistics);
-              return File(stream, HelperConstants.ExcelContentType, $"{TicketsStatisticsForEventFileName}{HelperConstants.ExcelExtension}");
+                var stream = await _excelFileExport.ExportFileAsync(statistics);
+                return File(stream, HelperConstants.ExcelContentType, $"{TicketsStatisticsForEventFileName}{HelperConstants.ExcelExtension}");
             }
             catch (Exception ex)
             {

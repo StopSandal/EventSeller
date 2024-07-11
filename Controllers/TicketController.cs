@@ -1,12 +1,8 @@
-﻿using Services;
-using Microsoft.AspNetCore.Http;
+﻿using EventSeller.DataLayer.EntitiesDto.Ticket;
+using EventSeller.Services.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using DataLayer.Model;
-using Services.Service;
-using EventSeller.DataLayer.EntitiesDto.Ticket;
-using Microsoft.AspNetCore.Authorization;
-using EventSeller.Services.Interfaces.Services;
 
 namespace EventSeller.Controllers
 {
@@ -69,7 +65,7 @@ namespace EventSeller.Controllers
             }
             try
             {
-                await _ticketService.UpdateAsync(id,EditTicketDto);
+                await _ticketService.UpdateAsync(id, EditTicketDto);
             }
             catch (Exception ex)
             {

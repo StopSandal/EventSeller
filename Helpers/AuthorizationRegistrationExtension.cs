@@ -20,7 +20,7 @@ namespace EventSeller.Helpers
             options.AddPolicy("EventManagerOrAdmin", policy =>
                 policy.RequireRole("Event manager", "Admin", "Super admin"));
             options.AddPolicy("VenueManagerOrAdmin", policy =>
-                policy.RequireRole("Venue manager","Admin", "Super admin"));
+                policy.RequireRole("Venue manager", "Admin", "Super admin"));
         }
     }
 }
