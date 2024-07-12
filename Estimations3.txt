@@ -101,9 +101,9 @@ Time buffer
 ?.5 Refactor code 
     * Estimated: 4 h
     * Real: 2 h 50 / 17:20
+
     add controllers logging
-    add summaries
-    more logging
+
     seed data
 ]
 Total 
