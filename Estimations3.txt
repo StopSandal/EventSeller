@@ -100,15 +100,11 @@ Time buffer
 
 ?.5 Refactor code 
     * Estimated: 4 h
-    * Real: 10  16:36
-[
+    * Real: 2 h 50 / 17:20
     add controllers logging
     add summaries
-    untilize service
-    fix constants at Payments system
-    regroup Spesical repo to 3
     more logging
-    more constans
+    seed data
 ]
 Total 
   * Estimated: 72,5 h [with buffer  84 h]
