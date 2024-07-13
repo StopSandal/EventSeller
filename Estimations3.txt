@@ -107,9 +107,12 @@ Time buffer
     * Estimated: 2 h
     * Real: 1 h 23 min
 
-?.7 Test system
+?.8 Test system
     * Estimated: 2 h
-    * Real: 
+    * Real: 1 h 40 min
+
+    event popularity
+
 
 Total 
   * Estimated: 72,5 h [with buffer  84 h]
