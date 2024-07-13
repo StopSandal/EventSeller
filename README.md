@@ -2,6 +2,13 @@ Ticket Management Web API
 
 This API supports CRUD operations via REST architecture for managing tickets, events, place addresses, place halls, hall sectors, and ticket seats.
 
+**New**
+
+1. Added multiple ticket registrations.
+2. Added ticket selling logic that interacts with a stub payment system (new repository).
+3. Added numerous admin statistics with different types of exports.
+
+
 To use any other method except Get, user should be authorized.
 
 Usage
