@@ -22,7 +22,7 @@ Update (PUT) methods
 Delete (DELETE) methods
 
 
-The solution consists of 3 projects:
+The solution consists of 4 projects:
 
 1. Main Layer (Presentation) - [EventSeller](https://github.com/StopSandal/EventSeller)
 2. Service Layer (Service) - [EventSeller.Services](https://github.com/StopSandal/EventSeller.Services)
