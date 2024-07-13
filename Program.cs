@@ -1,37 +1,34 @@
-using DataLayer.Model;
-using DataLayer.Model.EF;
+using EventSeller.DataLayer.EF;
 using EventSeller.DataLayer.Entities;
 using EventSeller.Helpers;
-using EventSeller.Services.Interfaces;
-using EventSeller.Services.Service;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Services;
-using Services.Service;
-using System.Drawing.Text;
-using System.Text;
 using System.Text.Json.Serialization;
+
+const string JWT_SECRET = "JWT:Secret";
+const string CONNECTION_STRING = "SellerContextConnection";
+const string MIGRATION_ASSEMBLY = "EventSeller.DataLayer";
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
     x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    x.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
 });
 
 builder.Services.AddDbContext<SellerContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SellerContextConnection")
-    ,x => x.MigrationsAssembly("EventSeller.DataLayer")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(CONNECTION_STRING)
+    , x => x.MigrationsAssembly(MIGRATION_ASSEMBLY)));
 
 builder.Services.RegisterServices();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddIdentity<User,IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
     {
-        // Configure password requirements
         if (builder.Environment.IsDevelopment())
         {
             options.Password.RequireDigit = false; // Turn off digit requirement
@@ -44,18 +41,19 @@ builder.Services.AddIdentity<User,IdentityRole>(options =>
     .AddEntityFrameworkStores<SellerContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthorization( options => 
+builder.Services.AddAuthorization(options =>
     options.AddAuthorizationPolicies()
     );
 
-builder.Services.AddAuthentication(options => 
+builder.Services.AddAuthentication(options =>
     options.SetDefaultAuthenticationOptions()
-    ).AddJwtBearer(options => 
-        options.SetDefaultJwtBearerOptions(builder.Configuration["JWT:Secret"])
+    ).AddJwtBearer(options =>
+        options.SetDefaultJwtBearerOptions(builder.Configuration[JWT_SECRET])
     );
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c =>
+{
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -79,6 +77,8 @@ builder.Services.AddSwaggerGen(c => {
 });
 
 var app = builder.Build();
+// migrate DB
+app.ApplyMigrations<SellerContext>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,9 +1,9 @@
-﻿using DataLayer.Models.Event;
+﻿using EventSeller.DataLayer.EntitiesDto.Event;
+using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Services.Service;
-using System.Collections.Generic;
+
 
 namespace EventSeller.Controllers
 {
@@ -23,7 +23,7 @@ namespace EventSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync()
         {
-            var list = await _eventService.GetEvents();
+            var list = await _eventService.GetEventsAsync();
 
             if (list.IsNullOrEmpty())
                 return NoContent();
@@ -33,7 +33,7 @@ namespace EventSeller.Controllers
         [Authorize]
         public async Task<IActionResult> GetAsync(long id)
         {
-            var list = await _eventService.GetByID(id);
+            var list = await _eventService.GetByIDAsync(id);
             if (list == null)
                 return NotFound();
             return Ok(list);
@@ -44,9 +44,9 @@ namespace EventSeller.Controllers
         {
             try
             {
-                await _eventService.Create(NewEvent);
+                await _eventService.CreateAsync(NewEvent);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while creating the event.");
@@ -55,9 +55,9 @@ namespace EventSeller.Controllers
         }
         [HttpPut("{id}")]
         [Authorize(Policy = "EventManagerOrAdmin")]
-        public async Task<IActionResult> EditEventDtoAsync(long id,[FromBody] EditEventDto EditEventDto) 
+        public async Task<IActionResult> EditEventDtoAsync(long id, [FromBody] EditEventDto EditEventDto)
         {
-            var existingEvent = await _eventService.GetByID(id);
+            var existingEvent = await _eventService.GetByIDAsync(id);
 
             if (existingEvent == null)
             {
@@ -65,9 +65,9 @@ namespace EventSeller.Controllers
             }
             try
             {
-                await _eventService.Update(id, EditEventDto);
+                await _eventService.UpdateAsync(id, EditEventDto);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return StatusCode(500, "An error occurred while updating the event.");
@@ -77,14 +77,14 @@ namespace EventSeller.Controllers
         }
         [HttpDelete("{id}")]
         [Authorize(Policy = "EventManagerOrAdmin")]
-        public async Task<IActionResult> DeleteEventAsync(long id) 
+        public async Task<IActionResult> DeleteEventAsync(long id)
         {
             try
             {
-                var existingEvent = await _eventService.GetByID(id);
+                var existingEvent = await _eventService.GetByIDAsync(id);
                 if (existingEvent == null)
                     return NotFound();
-                await _eventService.Delete(id);
+                await _eventService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception ex)
@@ -93,5 +93,5 @@ namespace EventSeller.Controllers
                 return StatusCode(500, "An error occurred while deleting the event.");
             }
         }
-    }    
+    }
 }

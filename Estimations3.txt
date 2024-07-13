@@ -1,0 +1,118 @@
+﻿0. separate interfaces
+  * Estimated: 30 min 
+  * Real: 13 min
+0,1. rename async methods
+  * Estimated: 50 min 
+  * Real: 15  min
+0,2. make repaetable values contants
+  * Estimated: 40 min 
+  * Real: 16 min 
+0,3. optimize user search
+  * Estimated: 30 min 
+  * Real: 10 min
+0,4. answer questions
+  * Estimated: 1 h
+  * Real: 17 min
+0,5. Rename LoginVM to DTO
+  * Estimated: 5 min
+  * Real: 2 min
+
+1. Make Estimation
+  * Estimated: 1,5 h 
+  * Real:  2h 31 min
+
+2. Add Admin Analytics 
+  2.1 add ticket Saled and On-Sale statistics for various filters
+    * Estimated: 5 h
+    * Real:  4 h 18 min
+  2.2 add event popularity statistics and selling scale for time and event filter
+    * Estimated: 3 h
+    * Real: 6 h 25 min
+  2.3  add per-day tickets selling statictic and event trafficability with Place filter and time filter
+    * Estimated: 5 h
+    * Real: 3 h 24 min
+  2.4  add ticketSeats and HallSector statistics for saless with event filter
+    * Estimated: 5 h
+    * Real:  5 h 3 min
+  2.5  add all analytics export to csv and excel
+    * Estimated: 7 h
+    * Real:  9 h 57 min
+
+3. Add Payment system
+  3.1 Add payment system models ( card, payment transactions, logs)
+    * Estimated: 2 h 
+    * Real: 1,5 h
+  3.2 Add logging 
+    * Estimated: 2 h
+    * Real: 1h 26 min 
+  3.3 add confirmation code with confiramation accepting
+    * Estimated: 4 h
+    * Real: 1 h 9 min
+  3.4 add +-Money on card, start , cancel and end payment transaction
+    * Estimated: 4 h  
+    * Real: 2 h 32 min
+  3.5 Add Currency type check on transaction.
+    * Estimated: 1 h
+    * Real: 10 min
+  3.6.0 Read about Unit tests
+    * Estimated: 6 h
+    * Real:  5 h
+  3.6 Add Unit Tests
+    * Estimated: 4 h
+    * Real: 4h 18 min 
+  3.7 Read about Integration Tests
+    * Estimated: 5 h
+    * Real: 42 min
+  3.7 Add Integration Tests
+    * Estimated: 3 h
+    * Real:  3h 26 min
+
+
+4. Add Seller Features
+  4.1  Make possible to registrate many tickects for Event ( to fill PlaceHall with options)
+    * Estimated: 6 h
+    * Real:  5 h 30 min
+  4.2 Make possible to create tickets directly on PlaceHall
+    * Estimated: 1,5 h
+    * Real: 1 h 38 min
+  4.3 Добавить возможность проведения одного события в разных местах (например один и тот же фильм может показываться в разных кинотеатрах в одно и тоже или разное время) ???
+  4.4 Add Temporal ticket booking on 10 minutes to get payment
+    * Estimated: 3 h
+    * Real: 3 h 
+  4.5 Add Ticket booking with canselation and payment commission
+    * Estimated: 6 h
+    * Real: 5h 44 min
+
+    interim Total 
+    67 h 43 min
+
+Time buffer
+ ?.1 Add money return service
+     * Estimated: 2 h
+    * Real: 1 h 34 min
+?.2 Fix and test exchange with payment api
+     * Estimated: 2 h
+    * Real: 2 h 24 min
+?.3 Add ticket start date checking for sales
+     * Estimated: 1 h
+    * Real: 42 min
+?.4 Add event sessions to composite tickets
+    * Estimated: 4 h
+    * Real: 3,5 h
+?.5 Refactor code 
+    * Estimated: 4 h
+    * Real: 4 h 24 min
+?.6 Add unit test for return payment
+    * Estimated: 1 h
+    * Real: 24 min
+?.7 Seed test data
+    * Estimated: 2 h
+    * Real: 1 h 23 min
+
+?.8 Test system
+    * Estimated: 2 h
+    * Real: 1 h 40 min
+
+Total 
+  * Estimated: 72,5 h [with buffer  84 h]
+  * Real: 83 h 44 min

@@ -1,8 +1,6 @@
-﻿using EventSeller.Services.Service;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Services.Service;
 using System.Text;
 
 namespace EventSeller.Helpers

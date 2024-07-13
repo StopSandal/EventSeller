@@ -12,6 +12,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSeller.DataLayer", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSeller.Services", "..\EventSeller.Services\EventSeller.Services.csproj", "{2F6A42CD-6506-4682-A048-98DDDBEC8ABD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentSystem", "..\PaymentSystem\PaymentSystem.csproj", "{0A0692C6-2461-4DA6-9A8C-72BFF63E65D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentSystem.DataLayer", "..\PaymentSystem\PaymentSystem.DataLayer\PaymentSystem.DataLayer.csproj", "{C2A8DE1E-DD92-423B-8E10-9A4D103A7A23}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentSystem.Services", "..\PaymentSystem\PaymentSystem.Services\PaymentSystem.Services.csproj", "{06AEE56C-DD29-42A7-AB2D-535D94C07C20}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentSystem.UnitTest", "..\PaymentSystem\PaymentSystem.UnitTest\PaymentSystem.UnitTest.csproj", "{2D701936-18F6-4228-99CD-C6816ACEC1C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentSystem.IntegrationTests", "..\PaymentSystem\PaymentSystem.IntegrationTests\PaymentSystem.IntegrationTests.csproj", "{9C0AB533-094A-42B2-860D-D8E35AD0A31C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +40,26 @@ Global
 		{2F6A42CD-6506-4682-A048-98DDDBEC8ABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F6A42CD-6506-4682-A048-98DDDBEC8ABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F6A42CD-6506-4682-A048-98DDDBEC8ABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A0692C6-2461-4DA6-9A8C-72BFF63E65D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A0692C6-2461-4DA6-9A8C-72BFF63E65D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A0692C6-2461-4DA6-9A8C-72BFF63E65D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A0692C6-2461-4DA6-9A8C-72BFF63E65D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A8DE1E-DD92-423B-8E10-9A4D103A7A23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A8DE1E-DD92-423B-8E10-9A4D103A7A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A8DE1E-DD92-423B-8E10-9A4D103A7A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A8DE1E-DD92-423B-8E10-9A4D103A7A23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06AEE56C-DD29-42A7-AB2D-535D94C07C20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06AEE56C-DD29-42A7-AB2D-535D94C07C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06AEE56C-DD29-42A7-AB2D-535D94C07C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06AEE56C-DD29-42A7-AB2D-535D94C07C20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D701936-18F6-4228-99CD-C6816ACEC1C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D701936-18F6-4228-99CD-C6816ACEC1C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D701936-18F6-4228-99CD-C6816ACEC1C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D701936-18F6-4228-99CD-C6816ACEC1C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C0AB533-094A-42B2-860D-D8E35AD0A31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C0AB533-094A-42B2-860D-D8E35AD0A31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C0AB533-094A-42B2-860D-D8E35AD0A31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C0AB533-094A-42B2-860D-D8E35AD0A31C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

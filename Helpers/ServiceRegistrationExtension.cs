@@ -1,8 +1,9 @@
-﻿using EventSeller.Services.Helpers;
+﻿using EventSeller.Services;
+using EventSeller.Services.Helpers;
 using EventSeller.Services.Interfaces;
+using EventSeller.Services.Interfaces.Exporters;
+using EventSeller.Services.Interfaces.Services;
 using EventSeller.Services.Service;
-using Services;
-using Services.Service;
 
 namespace EventSeller.Helpers
 {
@@ -26,6 +27,21 @@ namespace EventSeller.Helpers
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRolesService, UserRolesService>();
+            services.AddScoped<IExternalPaymentService, ExternalPaymentService>();
+            services.AddScoped<ITicketSellerService, TicketSellerService>();
+            services.AddScoped<IEventSessionService, EventSessionService>();
+            services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IDayTrafficStatisticService, DayTrafficStatisticService>();
+            services.AddScoped<ITicketSalesStatisticService, TicketSalesStatisticService>();
+            services.AddScoped<ISeatsPopularityService, SeatsPopularityService>();
+            services.AddScoped<ISectorsStatisticsService, SectorsStatisticsService>();
+            services.AddScoped<IEventPopularityService, EventPopularityService>();
+            services.AddScoped<ICsvFileExport, CsvFileExporter>();
+            services.AddScoped<IExcelFileExport, ExcelFileExporter>();
+            services.AddScoped<ITicketRegistrationService, TicketRegistrationService>();
+
+            services.AddHttpClient<ExternalPaymentService>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IJWTFactory, JWTFactory>();
 
