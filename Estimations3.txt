@@ -97,15 +97,20 @@ Time buffer
 ?.4 Add event sessions to composite tickets
     * Estimated: 4 h
     * Real: 3,5 h
-
 ?.5 Refactor code 
     * Estimated: 4 h
-    * Real: 2 h 50 / 17:20
+    * Real: 4 h 24 min
+?.6 Add unit test for return payment
+    * Estimated: 1 h
+    * Real: 24 min
+?.7 Seed test data
+    * Estimated: 2 h
+    * Real: 1 h 23 min
 
-    add controllers logging
+?.7 Test system
+    * Estimated: 2 h
+    * Real: 
 
-    seed data
-]
 Total 
   * Estimated: 72,5 h [with buffer  84 h]
   * Real: -  h

@@ -29,7 +29,6 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
     {
-        // Configure password requirements
         if (builder.Environment.IsDevelopment())
         {
             options.Password.RequireDigit = false; // Turn off digit requirement
