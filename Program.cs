@@ -77,6 +77,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+// migrate DB
+app.ApplyMigrations<SellerContext>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
