@@ -17,8 +17,8 @@ namespace EventSeller.Controllers
 
         private const string EventsPopularityByPeriodFileName = "EventPopularityByPeriod";
         private const string EventTypesPopularityFileName = "EventTypesPopularity";
-        private const string EventTypePopularityFileName = "EventTypePopularity";
         private const string MostPopularEventsFileName = "MostPopularEvents";
+        private const string MostPopularEventTypesFileName = "MostPopularEventTypes";
         private const string MostRealizableEventTypesFileName = "MostRealizableEventTypes";
         private const string MostRealizableEventsFileName = "MostRealizableEvents";
 
@@ -32,24 +32,45 @@ namespace EventSeller.Controllers
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("events/popularity")]
-        public async Task<IActionResult> GetEventsPopularityByPeriodAsync(DateTime startDateTime, DateTime endDateTime)
+        [HttpGet("events/popularity/export")]
+        public async Task<IActionResult> GetEventsPopularityByPeriodExportAsync(
+            [FromQuery] DateTime startDateTime,
+            [FromQuery] DateTime endDateTime,
+            [FromQuery] string format = "json")
         {
             try
             {
                 var result = await _eventPopularityService.GetEventsPopularityByPeriod(startDateTime, endDateTime);
-                return Ok(result);
+
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{EventsPopularityByPeriodFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{EventsPopularityByPeriodFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error retrieving events popularity: {ex.Message}");
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error retrieving events popularity.");
+                return BadRequest($"Error retrieving events popularity: {ex.Message}");
             }
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/statistic/{eventTypeId}")]
-        public async Task<IActionResult> GetEventTypeStatisticAsync(long eventTypeId)
+        [HttpGet("eventtypes/statistic/{eventTypeId}/export")]
+        public async Task<IActionResult> GetEventTypeStatisticExportAsync(
+    [FromRoute] long eventTypeId,
+    [FromQuery] string format = "json")
         {
             try
             {
@@ -58,279 +79,164 @@ namespace EventSeller.Controllers
                 {
                     return NotFound();
                 }
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving event type statistic: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("events/popular/{topCount}")]
-        public async Task<IActionResult> GetMostPopularEventsAsync(int topCount)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetMostPopularEvents(topCount);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving most popular events: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/popular/{topCount}")]
-        public async Task<IActionResult> GetMostPopularEventTypesAsync(int topCount)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetMostPopularEventTypes(topCount);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving most popular event types: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
 
-        [HttpGet("events/realizable/{topCount}")]
-        public async Task<IActionResult> GetMostRealizableEventsAsync(int topCount)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetMostRealizableEvents(topCount);
-                return Ok(result);
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{EventTypesPopularityFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{EventTypesPopularityFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error retrieving most realizable events: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/realizable/{topCount}")]
-        public async Task<IActionResult> GetMostRealizableEventTypesAsync(int topCount)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetMostRealizableEventTypes(topCount);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving most realizable event types: {ex.Message}");
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, $"Error retrieving event type statistic: {ex.Message}");
+                return BadRequest($"Error retrieving event type statistic: {ex.Message}");
             }
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("events/popularity/export/excel")]
-        public async Task<IActionResult> GetEventsPopularityByPeriodToExcelAsync(DateTime startDateTime, DateTime endDateTime)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetEventsPopularityByPeriod(startDateTime, endDateTime);
-
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{EventsPopularityByPeriodFileName}{HelperConstants.ExcelExtension}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving events popularity: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/statistic/{eventTypeId}/export/excel")]
-        public async Task<IActionResult> GetEventTypeStatisticToExcelAsync(long eventTypeId)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetEventTypeStatistic(eventTypeId);
-
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{EventTypePopularityFileName}{HelperConstants.ExcelExtension}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving event type statistic: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("events/popular/{topCount}/export/excel")]
-        public async Task<IActionResult> GetMostPopularEventsToExcelAsync(int topCount)
+        [HttpGet("events/popular/{topCount}/export")]
+        public async Task<IActionResult> GetMostPopularEventsExportAsync(
+            [FromRoute] int topCount,
+            [FromQuery] string format = "json")
         {
             try
             {
                 var result = await _eventPopularityService.GetMostPopularEvents(topCount);
 
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{MostPopularEventsFileName}{HelperConstants.ExcelExtension}");
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{MostPopularEventsFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{MostPopularEventsFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error retrieving most popular events: {ex.Message}");
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, $"Error retrieving most popular events: {ex.Message}");
+                return BadRequest($"Error retrieving most popular events: {ex.Message}");
             }
         }
+
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/popular/{topCount}/export/excel")]
-        public async Task<IActionResult> GetMostPopularEventTypesToExcelAsync(int topCount)
+        [HttpGet("eventtypes/popular/{topCount}/export")]
+        public async Task<IActionResult> GetMostPopularEventTypesExportAsync(
+            [FromRoute] int topCount,
+            [FromQuery] string format = "json")
         {
             try
             {
                 var result = await _eventPopularityService.GetMostPopularEventTypes(topCount);
 
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{EventTypesPopularityFileName}{HelperConstants.ExcelExtension}");
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{MostPopularEventTypesFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{MostPopularEventTypesFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error retrieving most popular event types: {ex.Message}");
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, $"Error retrieving most popular event types: {ex.Message}");
+                return BadRequest($"Error retrieving most popular event types: {ex.Message}");
             }
         }
 
-        [HttpGet("events/realizable/{topCount}/export/excel")]
-        public async Task<IActionResult> GetMostRealizableEventsToExcelAsync(int topCount)
+        [Authorize(Policy = "AdminOnly")]
+        [HttpGet("events/realizable/{topCount}/export")]
+        public async Task<IActionResult> GetMostRealizableEventsExportAsync(
+            [FromRoute] int topCount,
+            [FromQuery] string format = "json")
         {
             try
             {
                 var result = await _eventPopularityService.GetMostRealizableEvents(topCount);
 
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{MostRealizableEventsFileName}{HelperConstants.ExcelExtension}");
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{MostRealizableEventsFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{MostRealizableEventsFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error retrieving most realizable events: {ex.Message}");
-                return BadRequest(ex.Message);
+                return BadRequest($"Error retrieving most realizable events: {ex.Message}");
             }
         }
+
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/realizable/{topCount}/export/excel")]
-        public async Task<IActionResult> GetMostRealizableEventTypesToExcelAsync(int topCount)
+        [HttpGet("eventtypes/realizable/{topCount}/export")]
+        public async Task<IActionResult> GetMostRealizableEventTypesExportAsync(
+            [FromRoute] int topCount,
+            [FromQuery] string format = "json")
         {
             try
             {
                 var result = await _eventPopularityService.GetMostRealizableEventTypes(topCount);
 
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{MostRealizableEventTypesFileName}{HelperConstants.ExcelExtension}");
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{MostRealizableEventTypesFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{MostRealizableEventTypesFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Error retrieving most realizable event types: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("events/popularity/export/csv")]
-        public async Task<IActionResult> GetEventsPopularityByPeriodToCsvAsync(DateTime startDateTime, DateTime endDateTime)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetEventsPopularityByPeriod(startDateTime, endDateTime);
-
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{EventsPopularityByPeriodFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving events popularity: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/statistic/{eventTypeId}/export/csv")]
-        public async Task<IActionResult> GetEventTypeStatisticToCsvAsync(long eventTypeId)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetEventTypeStatistic(eventTypeId);
-
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{EventTypePopularityFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving event type statistic: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("events/popular/{topCount}/export/csv")]
-        public async Task<IActionResult> GetMostPopularEventsToCsvAsync(int topCount)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetMostPopularEvents(topCount);
-
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{MostPopularEventsFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving most popular events: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/popular/{topCount}/export/csv")]
-        public async Task<IActionResult> GetMostPopularEventTypesToCsvAsync(int topCount)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetMostPopularEventTypes(topCount);
-
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{EventTypesPopularityFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving most popular event types: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("events/realizable/{topCount}/export/csv")]
-        public async Task<IActionResult> GetMostRealizableEventsToCsvAsync(int topCount)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetMostRealizableEvents(topCount);
-
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{MostRealizableEventsFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving most realizable events: {ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("eventtypes/realizable/{topCount}/export/csv")]
-        public async Task<IActionResult> GetMostRealizableEventTypesToCsvAsync(int topCount)
-        {
-            try
-            {
-                var result = await _eventPopularityService.GetMostRealizableEventTypes(topCount);
-
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{MostRealizableEventTypesFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error retrieving most realizable event types: {ex.Message}");
-                return BadRequest(ex.Message);
+                return BadRequest($"Error retrieving most realizable event types: {ex.Message}");
             }
         }
     }

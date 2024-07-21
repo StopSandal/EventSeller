@@ -13,156 +13,135 @@ namespace EventSeller.Controllers
         private readonly ISeatsPopularityService _seatsPopularityService;
         private readonly IExcelFileExport _excelFileExport;
         private readonly ICsvFileExport _csvFileExport;
+        private readonly ILogger<SeatsStatisticsController> _logger;
 
-        private const string HallGroupedByEventFileName = "SeatsPopularityByHallGrouped";
-        private const string HallFileName = "SeatsPopularityByHall";
         private const string ForEventFileName = "SeatsPopularityForEvent";
-        public SeatsStatisticsController(ISeatsPopularityService seatsPopularityService, IExcelFileExport excelFileExport, ICsvFileExport csvFileExport)
+        private const string HallFileName = "SeatsPopularityByHall";
+        private const string HallGroupedByEventFileName = "SeatsPopularityByHallGrouped";
+
+
+        public SeatsStatisticsController(ISeatsPopularityService seatsPopularityService, IExcelFileExport excelFileExport, ICsvFileExport csvFileExport, ILogger<SeatsStatisticsController> logger)
         {
             _seatsPopularityService = seatsPopularityService;
             _excelFileExport = excelFileExport;
             _csvFileExport = csvFileExport;
+            _logger = logger;
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/event/{eventId}")]
-        public async Task<IActionResult> GetSeatsPopularityForEventAsync(long eventId, [FromQuery] int maxCount = 0)
+        [HttpGet("seats/popularity/event/{eventId}/export")]
+        public async Task<IActionResult> GetSeatsPopularityForEventExportAsync(
+            long eventId,
+            [FromQuery] int maxCount = 0,
+            [FromQuery] string format = "json")
         {
+            _logger.LogInformation("Retrieving seats popularity for event {EventId} with max count {MaxCount} and format {Format}.", eventId, maxCount, format);
+
             try
             {
                 var result = await _seatsPopularityService.GetSeatsPopularityForEventAsync(eventId, maxCount);
-                return Ok(result);
+
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{ForEventFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{ForEventFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error retrieving seats popularity for event {EventId}.", eventId);
+                return BadRequest($"An error occurred while retrieving seats popularity for event {eventId}: {ex.Message}");
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/hall/{placeHallId}")]
-        public async Task<IActionResult> GetSeatsPopularityInHallAsync(long placeHallId, [FromQuery] int maxCount = 0)
-        {
-            try
-            {
-                var result = await _seatsPopularityService.GetSeatsPopularityInHallAsync(placeHallId, maxCount);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/by-groups/hall/{placeHallId}")]
-        public async Task<IActionResult> GetSeatsPopularityByEventGroupsAtHallAsync(long placeHallId, [FromQuery] IEnumerable<long> eventIds, int maxCount = 0)
+        [HttpGet("seats/popularity/hall/{placeHallId}/export")]
+        public async Task<IActionResult> GetSeatsPopularityInHallExportAsync(
+            long placeHallId,
+            [FromQuery] int maxCount = 0,
+            [FromQuery] string format = "json")
         {
-            try
-            {
-                var result = await _seatsPopularityService.GetSeatsPopularityByEventGroupsAtHallAsync(placeHallId, eventIds, maxCount);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+            _logger.LogInformation("Retrieving seats popularity in hall {PlaceHallId} with max count {MaxCount} and format {Format}.", placeHallId, maxCount, format);
 
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/by-groups/hall/{placeHallId}/export/excel")]
-        public async Task<IActionResult> GetSeatsPopularityByEventGroupsAtHallToExcelAsync(long placeHallId, [FromQuery] IEnumerable<long> eventIds, int maxCount = 0)
-        {
-            try
-            {
-                var result = await _seatsPopularityService.GetSeatsPopularityByEventGroupsAtHallAsync(placeHallId, eventIds, maxCount);
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{HallGroupedByEventFileName}{HelperConstants.ExcelExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/event/{eventId}/export/excel")]
-        public async Task<IActionResult> GetSeatsPopularityForEventToExcelAsync(long eventId, [FromQuery] int maxCount = 0)
-        {
-            try
-            {
-                var result = await _seatsPopularityService.GetSeatsPopularityForEventAsync(eventId, maxCount);
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{ForEventFileName}{HelperConstants.ExcelExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/hall/{placeHallId}/export/excel")]
-        public async Task<IActionResult> GetSeatsPopularityInHallToExcelAsync(long placeHallId, [FromQuery] int maxCount = 0)
-        {
             try
             {
                 var result = await _seatsPopularityService.GetSeatsPopularityInHallAsync(placeHallId, maxCount);
 
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{HallFileName}{HelperConstants.ExcelExtension}");
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{HallFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{HallFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error retrieving seats popularity in hall {PlaceHallId}.", placeHallId);
+                return BadRequest($"An error occurred while retrieving seats popularity in hall {placeHallId}: {ex.Message}");
             }
         }
+
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/by-groups/hall/{placeHallId}/export/csv")]
-        public async Task<IActionResult> GetSeatsPopularityByEventGroupsAtHallToCsvAsync(long placeHallId, [FromQuery] IEnumerable<long> eventIds, int maxCount = 0)
+        [HttpGet("seats/popularity/by-groups/hall/{placeHallId}/export")]
+        public async Task<IActionResult> GetSeatsPopularityByEventGroupsAtHallExportAsync(
+            long placeHallId,
+            [FromQuery] IEnumerable<long> eventIds,
+            [FromQuery] int maxCount = 0,
+            [FromQuery] string format = "json")
         {
+            _logger.LogInformation("Retrieving seats popularity by event groups at hall {PlaceHallId} with event IDs {EventIds}, max count {MaxCount}, and format {Format}.",
+                placeHallId,
+                string.Join(",", eventIds),
+                maxCount,
+                format);
+
             try
             {
                 var result = await _seatsPopularityService.GetSeatsPopularityByEventGroupsAtHallAsync(placeHallId, eventIds, maxCount);
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{HallGroupedByEventFileName}{HelperConstants.CsvExtension}");
+
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{HallGroupedByEventFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{HallGroupedByEventFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/event/{eventId}/export/csv")]
-        public async Task<IActionResult> GetSeatsPopularityForEventToCsvAsync(long eventId, [FromQuery] int maxCount = 0)
-        {
-            try
-            {
-                var result = await _seatsPopularityService.GetSeatsPopularityForEventAsync(eventId, maxCount);
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{ForEventFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("seats/popularity/hall/{placeHallId}/export/csv")]
-        public async Task<IActionResult> GetSeatsPopularityInHallToCsvAsync(long placeHallId, [FromQuery] int maxCount = 0)
-        {
-            try
-            {
-                var result = await _seatsPopularityService.GetSeatsPopularityInHallAsync(placeHallId, maxCount);
-
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{HallFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error retrieving seats popularity by event groups at hall {PlaceHallId}.", placeHallId);
+                return BadRequest($"An error occurred while retrieving seats popularity by event groups at hall {placeHallId}: {ex.Message}");
             }
         }
     }

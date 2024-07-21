@@ -13,156 +13,139 @@ namespace EventSeller.Controllers
         private readonly ISectorsStatisticsService _sectorsPopularityService;
         private readonly IExcelFileExport _excelFileExport;
         private readonly ICsvFileExport _csvFileExport;
-        private const string HallGroupedByEventFileName = "SectorsPopularityByHallGrouped";
-        private const string HallFileName = "SectorsPopularityByHall";
-        private const string ForEventFileName = "SectorsPopularityForEvent";
+        private readonly ILogger<SectorsStatisticsController> _logger;
 
-        public SectorsStatisticsController(ISectorsStatisticsService sectorsStatisticsService, IExcelFileExport excelFileExport, ICsvFileExport csvFileExport)
+        private const string ForEventFileName = "SectorsPopularityForEvent";
+        private const string HallFileName = "SectorsPopularityByHall";
+        private const string HallGroupedByEventFileName = "SectorsPopularityByHallGrouped";
+
+
+        public SectorsStatisticsController(ISectorsStatisticsService sectorsStatisticsService, IExcelFileExport excelFileExport, ICsvFileExport csvFileExport, ILogger<SectorsStatisticsController> logger)
         {
             _sectorsPopularityService = sectorsStatisticsService;
             _excelFileExport = excelFileExport;
             _csvFileExport = csvFileExport;
+            _logger = logger;
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/event/{eventId}")]
-        public async Task<IActionResult> GetSectorsPopularityForEventAsync(long eventId, [FromQuery] int maxCount = 0)
+        [HttpGet("sectors/popularity/event/{eventId}/export")]
+        public async Task<IActionResult> GetSectorsPopularityForEventExportAsync(
+            long eventId,
+            [FromQuery] int maxCount = 0,
+            [FromQuery] string format = "json")
         {
+            _logger.LogInformation("Retrieving sectors popularity for event {EventId} with max count {MaxCount} and format {Format}.",
+                eventId,
+                maxCount,
+                format);
+
             try
             {
                 var result = await _sectorsPopularityService.GetSectorsPopularityForEventAsync(eventId, maxCount);
-                return Ok(result);
+
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{ForEventFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{ForEventFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error retrieving sectors popularity for event {EventId}.", eventId);
+                return BadRequest($"An error occurred while retrieving sectors popularity for event {eventId}: {ex.Message}");
             }
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/hall/{placeHallId}")]
-        public async Task<IActionResult> GetSectorsPopularityInHallAsync(long placeHallId, [FromQuery] int maxCount = 0)
+        [HttpGet("sectors/popularity/hall/{placeHallId}/export")]
+        public async Task<IActionResult> GetSectorsPopularityInHallExportAsync(
+            long placeHallId,
+            [FromQuery] int maxCount = 0,
+            [FromQuery] string format = "json")
         {
+            _logger.LogInformation("Retrieving sectors popularity for hall {PlaceHallId} with max count {MaxCount} and format {Format}.",
+                placeHallId,
+                maxCount,
+                format);
+
             try
             {
                 var result = await _sectorsPopularityService.GetSectorsPopularityInHallAsync(placeHallId, maxCount);
-                return Ok(result);
+
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{HallFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{HallFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error retrieving sectors popularity for hall {PlaceHallId}.", placeHallId);
+                return BadRequest($"An error occurred while retrieving sectors popularity for hall {placeHallId}: {ex.Message}");
             }
         }
 
         [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/by-groups/hall/{placeHallId}")]
-        public async Task<IActionResult> GetSectorsPopularityByEventGroupsAtHallAsync(long placeHallId, [FromQuery] IEnumerable<long> eventIds, int maxCount = 0)
+        [HttpGet("sectors/popularity/by-groups/hall/{placeHallId}/export")]
+        public async Task<IActionResult> GetSectorsPopularityByEventGroupsAtHallExportAsync(
+            long placeHallId,
+            [FromQuery] IEnumerable<long> eventIds,
+            [FromQuery] int maxCount = 0,
+            [FromQuery] string format = "json")
         {
-            try
-            {
-                var result = await _sectorsPopularityService.GetSectorsPopularityByEventGroupsAtHallAsync(placeHallId, eventIds, maxCount);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+            _logger.LogInformation("Retrieving sectors popularity by event groups for hall {PlaceHallId} with event IDs {EventIds} and max count {MaxCount}.",
+                placeHallId,
+                string.Join(",", eventIds),
+                maxCount);
 
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/event/{eventId}/export/excel")]
-        public async Task<IActionResult> GetSectorsPopularityForEventToExcelAsync(long eventId, [FromQuery] int maxCount = 0)
-        {
-            try
-            {
-                var result = await _sectorsPopularityService.GetSectorsPopularityForEventAsync(eventId, maxCount);
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{ForEventFileName}{HelperConstants.ExcelExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/hall/{placeHallId}/export/excel")]
-        public async Task<IActionResult> GetSectorsPopularityInHallToExcelAsync(long placeHallId, [FromQuery] int maxCount = 0)
-        {
-            try
-            {
-                var result = await _sectorsPopularityService.GetSectorsPopularityInHallAsync(placeHallId, maxCount);
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{HallFileName}{HelperConstants.ExcelExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/by-groups/hall/{placeHallId}/export/excel")]
-        public async Task<IActionResult> GetSectorsPopularityByEventGroupsAtHallToExcel(long placeHallId, [FromQuery] IEnumerable<long> eventIds, int maxCount = 0)
-        {
-            try
-            {
-                var result = await _sectorsPopularityService.GetSectorsPopularityByEventGroupsAtHallAsync(placeHallId, eventIds, maxCount);
-
-                var stream = await _excelFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.ExcelContentType, $"{HallGroupedByEventFileName}{HelperConstants.ExcelExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/event/{eventId}/export/csv")]
-        public async Task<IActionResult> GetSectorsPopularityForEventToCsvAsync(long eventId, [FromQuery] int maxCount = 0)
-        {
-            try
-            {
-                var result = await _sectorsPopularityService.GetSectorsPopularityForEventAsync(eventId, maxCount);
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{ForEventFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/hall/{placeHallId}/export/csv")]
-        public async Task<IActionResult> GetSectorsPopularityInHallToCsvAsync(long placeHallId, [FromQuery] int maxCount = 0)
-        {
-            try
-            {
-                var result = await _sectorsPopularityService.GetSectorsPopularityInHallAsync(placeHallId, maxCount);
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{HallFileName}{HelperConstants.CsvExtension}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize(Policy = "AdminOnly")]
-        [HttpGet("sectors/popularity/by-groups/hall/{placeHallId}/export/csv")]
-        public async Task<IActionResult> GetSectorsPopularityByEventGroupsAtHallToCsvAsync(long placeHallId, [FromQuery] IEnumerable<long> eventIds, int maxCount = 0)
-        {
             try
             {
                 var result = await _sectorsPopularityService.GetSectorsPopularityByEventGroupsAtHallAsync(placeHallId, eventIds, maxCount);
 
-                var stream = await _csvFileExport.ExportFileAsync(result);
-                return File(stream, HelperConstants.CsvContentType, $"{HallGroupedByEventFileName}{HelperConstants.CsvExtension}");
+                switch (format.ToLower())
+                {
+                    case "excel":
+                        var excelStream = await _excelFileExport.ExportFileAsync(result);
+                        return File(excelStream, HelperConstants.ExcelContentType, $"{HallGroupedByEventFileName}{HelperConstants.ExcelExtension}");
+
+                    case "csv":
+                        var csvStream = await _csvFileExport.ExportFileAsync(result);
+                        return File(csvStream, HelperConstants.CsvContentType, $"{HallGroupedByEventFileName}{HelperConstants.CsvExtension}");
+
+                    case "json":
+                        return Ok(result);
+
+                    default:
+                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
+                }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                _logger.LogError(ex, "Error retrieving sectors popularity by event groups for hall {PlaceHallId}.", placeHallId);
+                return BadRequest($"An error occurred while retrieving sectors popularity by event groups for hall {placeHallId}: {ex.Message}");
             }
         }
     }
