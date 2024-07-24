@@ -9,7 +9,7 @@ namespace EventSeller.Helpers
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<TContext>();
-                if(context.Database.GetPendingMigrations().Any())
+                if (context.Database.GetPendingMigrations().Any())
                     context.Database.Migrate();
             }
             return app;

@@ -1,4 +1,5 @@
-﻿using EventSeller.Services.Interfaces.Services;
+﻿using EventSeller.Helpers.Constants;
+using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,7 +38,7 @@ namespace EventSeller.Controllers
         }
 
         [HttpPost("SetRole/{id}/{role}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         public async Task<IActionResult> SetRoleAsync(string id, string role)
         {
             try
@@ -56,7 +57,7 @@ namespace EventSeller.Controllers
         }
 
         [HttpDelete("RemoveRole/{id}/{role}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         public async Task<IActionResult> RemoveRoleAsync(string id, string role)
         {
             try

@@ -1,4 +1,5 @@
 ﻿using EventSeller.DataLayer.EntitiesDto.PlaceHall;
+using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> AddPlaceHallDtoAsync([FromBody] AddPlaceHallDto NewPlaceHall)
         {
             try
@@ -58,7 +59,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> EditPlaceHallDtoAsync(long id, [FromBody] EditPlaceHallDto EditPlaceHallDto)
         {
 
@@ -87,7 +88,7 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> DeletePlaceHallAsync(long id)
         {
             try

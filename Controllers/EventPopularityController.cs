@@ -1,4 +1,4 @@
-﻿using EventSeller.Helpers;
+﻿using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Exporters;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +31,7 @@ namespace EventSeller.Controllers
             _csvFileExport = csvFileExport;
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("events/popularity/export")]
         public async Task<IActionResult> GetEventsPopularityByPeriodExportAsync(
             [FromQuery] DateTime startDateTime,
@@ -66,7 +66,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("eventtypes/statistic/{eventTypeId}/export")]
         public async Task<IActionResult> GetEventTypeStatisticExportAsync(
     [FromRoute] long eventTypeId,
@@ -104,7 +104,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("events/popular/{topCount}/export")]
         public async Task<IActionResult> GetMostPopularEventsExportAsync(
             [FromRoute] int topCount,
@@ -138,7 +138,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("eventtypes/popular/{topCount}/export")]
         public async Task<IActionResult> GetMostPopularEventTypesExportAsync(
             [FromRoute] int topCount,
@@ -172,7 +172,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("events/realizable/{topCount}/export")]
         public async Task<IActionResult> GetMostRealizableEventsExportAsync(
             [FromRoute] int topCount,
@@ -206,7 +206,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("eventtypes/realizable/{topCount}/export")]
         public async Task<IActionResult> GetMostRealizableEventTypesExportAsync(
             [FromRoute] int topCount,

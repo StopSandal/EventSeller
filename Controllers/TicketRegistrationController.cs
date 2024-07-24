@@ -1,4 +1,5 @@
 ﻿using EventSeller.DataLayer.EntitiesDto.Ticket;
+using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace EventSeller.Controllers
         }
 
         [HttpPost("tickets/add/by-count")]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> AddTicketsByCount([FromBody] AddTicketsForHallByCountDTO addTicketsForHallByCountDTO)
         {
             try
@@ -47,7 +48,7 @@ namespace EventSeller.Controllers
         }
 
         [HttpPost("tickets/add/by-seats")]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> AddTicketsBySeats([FromBody] AddTicketsForHallToFillDTO addTicketsForHallToFillDTO)
         {
             try

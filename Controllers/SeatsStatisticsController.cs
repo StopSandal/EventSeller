@@ -1,4 +1,4 @@
-﻿using EventSeller.Helpers;
+﻿using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Exporters;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +28,7 @@ namespace EventSeller.Controllers
             _logger = logger;
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("seats/popularity/event/{eventId}/export")]
         public async Task<IActionResult> GetSeatsPopularityForEventExportAsync(
             long eventId,
@@ -66,7 +66,7 @@ namespace EventSeller.Controllers
         }
 
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("seats/popularity/hall/{placeHallId}/export")]
         public async Task<IActionResult> GetSeatsPopularityInHallExportAsync(
             long placeHallId,
@@ -103,7 +103,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("seats/popularity/by-groups/hall/{placeHallId}/export")]
         public async Task<IActionResult> GetSeatsPopularityByEventGroupsAtHallExportAsync(
             long placeHallId,

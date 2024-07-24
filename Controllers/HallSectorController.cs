@@ -1,4 +1,5 @@
 ﻿using EventSeller.DataLayer.EntitiesDto.HallSector;
+using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> AddHallSectorDtoAsync([FromBody] AddHallSectorDto NewHallSector)
         {
             try
@@ -59,7 +60,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> EditHallSectorDtoAsync(long id, [FromBody] EditHallSectorDto EditHallSectorDto)
         {
             var existingHallSector = await _hallSectorService.GetByIDAsync(id);
@@ -86,7 +87,7 @@ namespace EventSeller.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> DeleteHallSectorAsync(long id)
         {
             try

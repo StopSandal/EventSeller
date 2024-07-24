@@ -1,4 +1,4 @@
-﻿namespace EventSeller.Helpers
+﻿namespace EventSeller.Helpers.Constants
 {
     public static class HelperConstants
     {

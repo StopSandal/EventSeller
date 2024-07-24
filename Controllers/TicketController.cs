@@ -1,4 +1,5 @@
 ﻿using EventSeller.DataLayer.EntitiesDto.Ticket;
+using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace EventSeller.Controllers
             return Ok(list);
         }
         [HttpPost]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> AddTicketDtoAsync([FromBody] AddTicketDto NewTicket)
         {
             try
@@ -54,7 +55,7 @@ namespace EventSeller.Controllers
             return Created();
         }
         [HttpPut("{id}")]
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         public async Task<IActionResult> EditTicketDtoAsync(long id, [FromBody] EditTicketDto EditTicketDto)
         {
             var existingTicket = await _ticketService.GetByIDAsync(id);
@@ -75,7 +76,7 @@ namespace EventSeller.Controllers
 
             return NoContent();
         }
-        [Authorize(Policy = "VenueManagerOrAdmin")]
+        [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTicketAsync(long id)
         {

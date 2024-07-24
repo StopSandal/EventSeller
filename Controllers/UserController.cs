@@ -1,5 +1,6 @@
 ﻿using EventSeller.DataLayer.EntitiesDto;
 using EventSeller.DataLayer.EntitiesDto.User;
+using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace EventSeller.Controllers
         }
 
         [HttpGet("GetUser/{userName}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         public async Task<IActionResult> GetUserAsync(string userName)
         {
             var user = await _userService.GetUserByUserNameAsync(userName);
@@ -81,7 +82,7 @@ namespace EventSeller.Controllers
         }
 
         [HttpPut("Update/{id}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         public async Task<IActionResult> UpdateAsync(string id, [FromBody] EditUserDto model)
         {
             try
@@ -96,7 +97,7 @@ namespace EventSeller.Controllers
         }
 
         [HttpDelete("Delete/{id}")]
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         public async Task<IActionResult> DeleteAsync(string id)
         {
             try

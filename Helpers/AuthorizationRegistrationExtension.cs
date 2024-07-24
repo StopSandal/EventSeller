@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EventSeller.Helpers.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventSeller.Helpers
 {
@@ -13,14 +14,25 @@ namespace EventSeller.Helpers
         /// <param name="options">Instance of Authorization options</param>
         public static void AddAuthorizationPolicies(this AuthorizationOptions options)
         {
-            options.AddPolicy("SuperAdminOnly", policy =>
-                policy.RequireRole("Super admin"));
-            options.AddPolicy("AdminOnly", policy =>
-                policy.RequireRole("Admin", "Super admin"));
-            options.AddPolicy("EventManagerOrAdmin", policy =>
-                policy.RequireRole("Event manager", "Admin", "Super admin"));
-            options.AddPolicy("VenueManagerOrAdmin", policy =>
-                policy.RequireRole("Venue manager", "Admin", "Super admin"));
+            options.AddPolicy(PoliciesConstants.SuperAdminOnlyPolicy, policy =>
+                policy.RequireRole(RolesConstants.SuperAdminRole));
+
+            options.AddPolicy(PoliciesConstants.AdminOnlyPolicy, policy =>
+                policy.RequireRole(
+                    RolesConstants.AdminRole
+                    , RolesConstants.SuperAdminRole));
+
+            options.AddPolicy(PoliciesConstants.EventManagerOrAdminPolicy, policy =>
+                policy.RequireRole(
+                    RolesConstants.EventManagerRole
+                    , RolesConstants.AdminRole
+                    , RolesConstants.SuperAdminRole));
+
+            options.AddPolicy(PoliciesConstants.VenueManagerOrAdminPolicy, policy =>
+                policy.RequireRole(
+                    RolesConstants.VenueManagerRole
+                    , RolesConstants.AdminRole
+                    , RolesConstants.SuperAdminRole));
         }
     }
 }

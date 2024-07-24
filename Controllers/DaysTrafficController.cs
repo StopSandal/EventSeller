@@ -1,5 +1,5 @@
 ﻿using EventSeller.DataLayer.EntitiesDto.Statistics;
-using EventSeller.Helpers;
+using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Exporters;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +34,7 @@ namespace EventSeller.Controllers
             _excelFileExport = excelFileExport;
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("traffic/byDate/export")]
         public async Task<IActionResult> GetDaysTrafficOrderedByDayExportAsync([FromQuery] int maxCount = 0, [FromQuery] string format = "json")
         {
@@ -69,7 +69,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("traffic/byTraffic/export")]
         public async Task<IActionResult> GetDaysTrafficOrderedByTotalTrafficExportAsync([FromQuery] int maxCount = 0, [FromQuery] string format = "json")
         {
@@ -105,7 +105,7 @@ namespace EventSeller.Controllers
         }
 
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("traffic/ForPeriod/ByDay/export")]
         public async Task<IActionResult> GetDaysTrafficAtPeriodOrderedByDayExportAsync(
             [FromQuery] DateTime startPeriod,
@@ -145,7 +145,7 @@ namespace EventSeller.Controllers
         }
 
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("traffic/ForPeriod/ByTraffic/export")]
         public async Task<IActionResult> GetDaysTrafficAtPeriodOrderedByTotalTrafficExportAsync(
             [FromQuery] DateTime startPeriod,
@@ -185,7 +185,7 @@ namespace EventSeller.Controllers
         }
 
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("traffic/ForHall/ByDay/export")]
         public async Task<IActionResult> GetDaysTrafficAtHallOrderedByDayExportAsync(
             [FromQuery] long placeHallId,
@@ -224,7 +224,7 @@ namespace EventSeller.Controllers
         }
 
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("traffic/ForHall/ByTraffic/export")]
         public async Task<IActionResult> GetDaysTrafficAtHallOrderedByTotalTrafficExportAsync(
             [FromQuery] long placeHallId,
@@ -263,7 +263,7 @@ namespace EventSeller.Controllers
         }
 
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("traffic/ForPlace/ByDay/export")]
         public async Task<IActionResult> GetDaysTrafficAtPlaceOrderedByDayExportAsync(
             [FromQuery] long placeAddressId,
@@ -301,7 +301,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("traffic/ForPlace/ByTraffic/export")]
         public async Task<IActionResult> GetDaysTrafficAtPlaceOrderedByTotalTrafficExportAsync(
             [FromQuery] long placeAddressId,

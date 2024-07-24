@@ -1,4 +1,4 @@
-﻿using EventSeller.Helpers;
+﻿using EventSeller.Helpers.Constants;
 using EventSeller.Services.Interfaces.Exporters;
 using EventSeller.Services.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +16,7 @@ namespace EventSeller.Controllers
         private readonly ILogger<SalesStatisticsController> _logger;
 
         private const string TicketsStatisticsForEventFileName = "SalesStatisticsForEvent";
-        private const string TicketsStatisticsForEventsFileName = "SalesStatisticsForEvents"; 
+        private const string TicketsStatisticsForEventsFileName = "SalesStatisticsForEvents";
         private const string TicketsStatisticsForEventSessionFileName = "SalesStatisticsForEventSession";
         private const string TicketsStatisticsForEventAndSessionFileName = "SalesStatisticsForEventAndSession";
         private const string TicketsStatisticsForEventSessionsFileName = "SalesStatisticsForEventSessions";
@@ -31,7 +31,7 @@ namespace EventSeller.Controllers
             _logger = logger;
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/event/{eventId}/export")]
         public async Task<IActionResult> GetSalesStatisticForEventExportAsync(
             [FromRoute] long eventId,
@@ -65,7 +65,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/events/export")]
         public async Task<IActionResult> GetSalesStatisticForEventsExportAsync(
             [FromQuery] IEnumerable<long> eventIds,
@@ -100,7 +100,7 @@ namespace EventSeller.Controllers
         }
 
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/event-session/{eventSessionId}/export")]
         public async Task<IActionResult> GetSalesStatisticForEventSessionExportAsync(
     long eventSessionId,
@@ -134,7 +134,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/event/{eventId}/session/{eventSessionId}/export")]
         public async Task<IActionResult> GetSalesStatisticForEventAndSessionExportAsync(
             long eventId,
@@ -169,7 +169,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/event-sessions/export")]
         public async Task<IActionResult> GetSalesStatisticForEventSessionsExportAsync(
             [FromQuery] IEnumerable<long> eventSessionIds,
@@ -204,7 +204,7 @@ namespace EventSeller.Controllers
         }
 
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/event-type/{eventTypeId}/export")]
         public async Task<IActionResult> GetSalesStatisticForEventTypeExportAsync(
             long eventTypeId,
@@ -238,7 +238,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/period/export")]
         public async Task<IActionResult> GetSalesStatisticForPeriodExportAsync(
             [FromQuery] DateTime firstPeriod,
@@ -273,7 +273,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/week/export")]
         public async Task<IActionResult> GetSalesStatisticForWeekExportAsync(
             [FromQuery] DateTime weekStartDate,
@@ -307,7 +307,7 @@ namespace EventSeller.Controllers
             }
         }
 
-        [Authorize(Policy = "AdminOnly")]
+        [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("tickets/statistics/day/export")]
         public async Task<IActionResult> GetSalesStatisticForDayExportAsync(
             [FromQuery] DateTime dayDate,
