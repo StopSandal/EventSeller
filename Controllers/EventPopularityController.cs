@@ -40,7 +40,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var result = await _eventPopularityService.GetEventsPopularityByPeriod(startDateTime, endDateTime);
+                var result = await _eventPopularityService.GetEventsPopularityByPeriodAsync(startDateTime, endDateTime);
 
                 switch (format.ToLower())
                 {
@@ -74,7 +74,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var result = await _eventPopularityService.GetEventTypeStatistic(eventTypeId);
+                var result = await _eventPopularityService.GetEventTypeStatisticAsync(eventTypeId);
                 if (result == null)
                 {
                     return NotFound();
@@ -112,7 +112,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var result = await _eventPopularityService.GetMostPopularEvents(topCount);
+                var result = await _eventPopularityService.GetMostPopularEventsAsync(topCount);
 
                 switch (format.ToLower())
                 {
@@ -146,7 +146,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var result = await _eventPopularityService.GetMostPopularEventTypes(topCount);
+                var result = await _eventPopularityService.GetMostPopularEventTypesAsync(topCount);
 
                 switch (format.ToLower())
                 {
@@ -180,7 +180,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var result = await _eventPopularityService.GetMostRealizableEvents(topCount);
+                var result = await _eventPopularityService.GetMostRealizableEventsAsync(topCount);
 
                 switch (format.ToLower())
                 {
@@ -214,7 +214,7 @@ namespace EventSeller.Controllers
         {
             try
             {
-                var result = await _eventPopularityService.GetMostRealizableEventTypes(topCount);
+                var result = await _eventPopularityService.GetMostRealizableEventTypesAsync(topCount);
 
                 switch (format.ToLower())
                 {

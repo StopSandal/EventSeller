@@ -23,7 +23,7 @@ namespace EventSeller.Controllers
 
         [HttpPost("tickets/add/by-count")]
         [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
-        public async Task<IActionResult> AddTicketsByCount([FromBody] AddTicketsForHallByCountDTO addTicketsForHallByCountDTO)
+        public async Task<IActionResult> AddTicketsByCountAsync([FromBody] AddTicketsForHallByCountDTO addTicketsForHallByCountDTO)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace EventSeller.Controllers
 
         [HttpPost("tickets/add/by-seats")]
         [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
-        public async Task<IActionResult> AddTicketsBySeats([FromBody] AddTicketsForHallToFillDTO addTicketsForHallToFillDTO)
+        public async Task<IActionResult> AddTicketsBySeatsAsync([FromBody] AddTicketsForHallToFillDTO addTicketsForHallToFillDTO)
         {
             try
             {
