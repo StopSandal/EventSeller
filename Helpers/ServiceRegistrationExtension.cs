@@ -38,6 +38,7 @@ namespace EventSeller.Helpers
             services.AddScoped<IEventPopularityService, EventPopularityService>();
             services.AddScoped<ICsvFileExport, CsvFileExporter>();
             services.AddScoped<IExcelFileExport, ExcelFileExporter>();
+            services.AddScoped<IResultExportService, ResultExportService>();
             services.AddScoped<ITicketRegistrationService, TicketRegistrationService>();
 
             services.AddHttpClient<ExternalPaymentService>();

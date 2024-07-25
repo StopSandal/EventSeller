@@ -11,8 +11,7 @@ namespace EventSeller.Controllers
     public class EventPopularityController : ControllerBase
     {
         private readonly IEventPopularityService _eventPopularityService;
-        private readonly IExcelFileExport _excelFileExport;
-        private readonly ICsvFileExport _csvFileExport;
+        private readonly IResultExportService _resultExportService;
         private readonly ILogger<EventPopularityController> _logger;
 
         private const string EventsPopularityByPeriodFileName = "EventPopularityByPeriod";
@@ -23,12 +22,11 @@ namespace EventSeller.Controllers
         private const string MostRealizableEventsFileName = "MostRealizableEvents";
 
 
-        public EventPopularityController(IEventPopularityService eventPopularityService, ILogger<EventPopularityController> logger, IExcelFileExport excelFileExport, ICsvFileExport csvFileExport)
+        public EventPopularityController(IEventPopularityService eventPopularityService, ILogger<EventPopularityController> logger, IResultExportService resultExportService)
         {
             _eventPopularityService = eventPopularityService;
+            _resultExportService = resultExportService;
             _logger = logger;
-            _excelFileExport = excelFileExport;
-            _csvFileExport = csvFileExport;
         }
 
         [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
@@ -42,22 +40,7 @@ namespace EventSeller.Controllers
             {
                 var result = await _eventPopularityService.GetEventsPopularityByPeriodAsync(startDateTime, endDateTime);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{EventsPopularityByPeriodFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{EventsPopularityByPeriodFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
+                return await _resultExportService.ExportDataAsync(result, format, EventsPopularityByPeriodFileName);
             }
             catch (Exception ex)
             {
@@ -69,33 +52,14 @@ namespace EventSeller.Controllers
         [Authorize(Policy = PoliciesConstants.AdminOnlyPolicy)]
         [HttpGet("eventtypes/statistic/{eventTypeId}/export")]
         public async Task<IActionResult> GetEventTypeStatisticExportAsync(
-    [FromRoute] long eventTypeId,
-    [FromQuery] string format = "json")
+            [FromRoute] long eventTypeId,
+            [FromQuery] string format = "json")
         {
             try
             {
                 var result = await _eventPopularityService.GetEventTypeStatisticAsync(eventTypeId);
-                if (result == null)
-                {
-                    return NotFound();
-                }
+                return await _resultExportService.ExportDataAsync(result, format, EventTypesPopularityFileName);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{EventTypesPopularityFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{EventTypesPopularityFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
             }
             catch (Exception ex)
             {
@@ -114,22 +78,7 @@ namespace EventSeller.Controllers
             {
                 var result = await _eventPopularityService.GetMostPopularEventsAsync(topCount);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{MostPopularEventsFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{MostPopularEventsFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
+                return await _resultExportService.ExportDataAsync(result, format, MostPopularEventsFileName);
             }
             catch (Exception ex)
             {
@@ -148,22 +97,7 @@ namespace EventSeller.Controllers
             {
                 var result = await _eventPopularityService.GetMostPopularEventTypesAsync(topCount);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{MostPopularEventTypesFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{MostPopularEventTypesFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
+                return await _resultExportService.ExportDataAsync(result, format, MostPopularEventTypesFileName);
             }
             catch (Exception ex)
             {
@@ -182,22 +116,7 @@ namespace EventSeller.Controllers
             {
                 var result = await _eventPopularityService.GetMostRealizableEventsAsync(topCount);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{MostRealizableEventsFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{MostRealizableEventsFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
+                return await _resultExportService.ExportDataAsync(result, format, MostRealizableEventsFileName);
             }
             catch (Exception ex)
             {
@@ -216,22 +135,7 @@ namespace EventSeller.Controllers
             {
                 var result = await _eventPopularityService.GetMostRealizableEventTypesAsync(topCount);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{MostRealizableEventTypesFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{MostRealizableEventTypesFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
+                return await _resultExportService.ExportDataAsync(result, format, MostRealizableEventTypesFileName);
             }
             catch (Exception ex)
             {

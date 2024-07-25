@@ -11,8 +11,7 @@ namespace EventSeller.Controllers
     public class SectorsStatisticsController : ControllerBase
     {
         private readonly ISectorsStatisticsService _sectorsPopularityService;
-        private readonly IExcelFileExport _excelFileExport;
-        private readonly ICsvFileExport _csvFileExport;
+        private readonly IResultExportService _resultExportService;
         private readonly ILogger<SectorsStatisticsController> _logger;
 
         private const string ForEventFileName = "SectorsPopularityForEvent";
@@ -20,11 +19,10 @@ namespace EventSeller.Controllers
         private const string HallGroupedByEventFileName = "SectorsPopularityByHallGrouped";
 
 
-        public SectorsStatisticsController(ISectorsStatisticsService sectorsStatisticsService, IExcelFileExport excelFileExport, ICsvFileExport csvFileExport, ILogger<SectorsStatisticsController> logger)
+        public SectorsStatisticsController(ISectorsStatisticsService sectorsStatisticsService, IResultExportService resultExportService, ILogger<SectorsStatisticsController> logger)
         {
             _sectorsPopularityService = sectorsStatisticsService;
-            _excelFileExport = excelFileExport;
-            _csvFileExport = csvFileExport;
+            _resultExportService = resultExportService;
             _logger = logger;
         }
 
@@ -44,22 +42,7 @@ namespace EventSeller.Controllers
             {
                 var result = await _sectorsPopularityService.GetSectorsPopularityForEventAsync(eventId, maxCount);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{ForEventFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{ForEventFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
+                return await _resultExportService.ExportDataAsync(result, format, ForEventFileName);
             }
             catch (Exception ex)
             {
@@ -84,22 +67,7 @@ namespace EventSeller.Controllers
             {
                 var result = await _sectorsPopularityService.GetSectorsPopularityInHallAsync(placeHallId, maxCount);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{HallFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{HallFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
+                return await _resultExportService.ExportDataAsync(result, format, HallFileName);
             }
             catch (Exception ex)
             {
@@ -125,22 +93,7 @@ namespace EventSeller.Controllers
             {
                 var result = await _sectorsPopularityService.GetSectorsPopularityByEventGroupsAtHallAsync(placeHallId, eventIds, maxCount);
 
-                switch (format.ToLower())
-                {
-                    case "excel":
-                        var excelStream = await _excelFileExport.ExportFileAsync(result);
-                        return File(excelStream, HelperConstants.ExcelContentType, $"{HallGroupedByEventFileName}{HelperConstants.ExcelExtension}");
-
-                    case "csv":
-                        var csvStream = await _csvFileExport.ExportFileAsync(result);
-                        return File(csvStream, HelperConstants.CsvContentType, $"{HallGroupedByEventFileName}{HelperConstants.CsvExtension}");
-
-                    case "json":
-                        return Ok(result);
-
-                    default:
-                        return BadRequest("Invalid format specified. Supported formats are 'json', 'excel', and 'csv'.");
-                }
+                return await _resultExportService.ExportDataAsync(result, format, HallGroupedByEventFileName);
             }
             catch (Exception ex)
             {
