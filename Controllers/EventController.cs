@@ -41,7 +41,7 @@ namespace EventSeller.Controllers
         }
         [HttpPost]
         [Authorize(Policy = PoliciesConstants.EventManagerOrAdminPolicy)]
-        public async Task<IActionResult> AddEventDtoAsync([FromBody] AddEventDto NewEvent)
+        public async Task<IActionResult> AddEventAsync([FromBody] AddEventDto NewEvent)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace EventSeller.Controllers
         }
         [HttpPut("{id}")]
         [Authorize(Policy = PoliciesConstants.EventManagerOrAdminPolicy)]
-        public async Task<IActionResult> EditEventDtoAsync(long id, [FromBody] EditEventDto EditEventDto)
+        public async Task<IActionResult> EditEventAsync(long id, [FromBody] EditEventDto EditEventDto)
         {
             var existingEvent = await _eventService.GetByIDAsync(id);
 

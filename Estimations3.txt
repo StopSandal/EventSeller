@@ -13,7 +13,7 @@
 0,4. answer questions
   * Estimated: 1 h
   * Real: 17 min
-0,5. Rename LoginVM to DTO
+0,5. Rename LoginVM to 
   * Estimated: 5 min
   * Real: 2 min
 

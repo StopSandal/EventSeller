@@ -40,7 +40,7 @@ namespace EventSeller.Controllers
         }
         [HttpPost]
         [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
-        public async Task<IActionResult> AddPlaceAddressDtoAsync([FromBody] AddPlaceAddressDto NewPlaceAddress)
+        public async Task<IActionResult> AddPlaceAddressAsync([FromBody] AddPlaceAddressDto NewPlaceAddress)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace EventSeller.Controllers
         }
         [HttpPut("{id}")]
         [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
-        public async Task<IActionResult> EditPlaceAddressDtoAsync(long id, [FromBody] EditPlaceAddressDto EditPlaceAddressDto)
+        public async Task<IActionResult> EditPlaceAddressAsync(long id, [FromBody] EditPlaceAddressDto EditPlaceAddressDto)
         {
             var existingPlaceAddress = await _placeAddressService.GetByIDAsync(id);
 

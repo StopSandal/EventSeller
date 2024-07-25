@@ -41,7 +41,7 @@ namespace EventSeller.Controllers
         }
         [HttpPost]
         [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
-        public async Task<IActionResult> AddTicketDtoAsync([FromBody] AddTicketDto NewTicket)
+        public async Task<IActionResult> AddTicketAsync([FromBody] AddTicketDto NewTicket)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace EventSeller.Controllers
         }
         [HttpPut("{id}")]
         [Authorize(Policy = PoliciesConstants.VenueManagerOrAdminPolicy)]
-        public async Task<IActionResult> EditTicketDtoAsync(long id, [FromBody] EditTicketDto EditTicketDto)
+        public async Task<IActionResult> EditTicketAsync(long id, [FromBody] EditTicketDto EditTicketDto)
         {
             var existingTicket = await _ticketService.GetByIDAsync(id);
 
