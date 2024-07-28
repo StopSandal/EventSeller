@@ -41,6 +41,8 @@ namespace EventSeller.Helpers
             services.AddScoped<IResultExportService, ResultExportService>();
             services.AddScoped<ITicketRegistrationService, TicketRegistrationService>();
 
+            services.AddSingleton(typeof(ITimerManager<>), typeof(TimerManager<>));
+
             services.AddHttpClient<ExternalPaymentService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
